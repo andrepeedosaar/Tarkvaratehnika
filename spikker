@@ -1,0 +1,205 @@
+Rollid
+Ettekandja
+Ettekandja/klienditeenindaja puutub POS süsteemiga kõige enam kokku. Kui ülejäänud rolle saab pidada administratiivseteks, kasutades süsteemi episoodiliselt, siis ettekandja töö suuresti seisnebki POS süsteemi kasutamises, et võtta vastu tellimusi, vormistada ja esitada arveid jne. Seepärast on ka intervjuu ettekandja rolli teemal kõige mahukam.
+
+Vahetuse vanem
+Vahetuse vanemat võib pidada laiendatud õigustega ettekandjaks. St ta saab vajaduse korral teha ettekandja tööd, aga ühtlasi omab ligipääsu töötajate andmebaasile ning saab administreerida töögraafikuid, lõunapause, kohalolekut ja muud vajalikku.
+
+Restorani juhataja
+Restorani juhataja roll on puhtalt administratiivne. Tal on täielik ligipääs töötajate andmebaasile, st ka palga- ja kontonumbritele. Ta administreerib ka oma restorani inventari ning koostab aruandeid juhtkonna jaoks.
+
+Ettevõtte juhtkond
+Juhtkonna vajadused on väiksed ning otseselt POS süsteemiga puutuvad kokku vähe. Restorane on palju ja asju ajavad seal juhatajad. Juhtkonnal on vaja kasumiaruandeid ning kuna tegu on restorani ketiga, milles osad müüdavad tooted kattuvad, ka toodete müüginumbreid.
+
+Intervjuu protokollid
+Ettekandja roll
+Kas tellimuse eest peab maksma kohe või võib arve lahti jätta? : võib
+Kuidas käib tellimuse sisestamine? : mobiilne seade, mis sünkroniseerub keskse kassaga leti taga.
+Kas mobiilse seadme platvorm on oluline (eraldi seade / nutitelefon) : ei ole
+Kuidas toimib toote valimine tellimust vastu võttes? : nimekiri, ka otsinguväli ning toodete grupeerimine kategooria järgi
+Arve jagamine laudkonna seas: jah
+Krediitkaartide kasutamine : saab
+Millised krediitkaardid sobivad? : Visa, MasterCard?
+Jooksva arve rekalkuleerimine avastades püsiklienti : on
+Arve redigeerimine (kauba eemaldamine/lisamine) : on
+Arve üleandmine teisele ettekandjale : on
+Arve "riputamine" : on
+Tagatisraha arvutamine suurema summa sisetamisel : on
+Arvest loobumine : on
+Tellimuste (arvete) history kuvamine : ainult omade
+Jooksvate täitmata tellimuste list : on
+Püsiklientide nimede andmebaas : olemas
+Tipiraha vormistamine : ei
+Tšekkidega maksmine : keelatud
+Tellimuse kaupade otsimine laokaupade nimekirjast ? : on
+Kaupade tellimine: keelatud
+Arve lõpetamise meeldetuletus: ei
+Tööaja alguse ja lõpu määramine: Tema seda ei tee
+Kas ettekandja saab näha pakkumisi püsiklientide jaoks ? Jah
+Kuidas arvestatakse pakkumisi püsiklientidele : manuaalselt
+Kas kliendikaardi esitamisel kuvatakse kliendi nimi? : jah
+Kas klienditeenindaja saab lisada uusi püsikliente? : jah
+Saab lisada püsikliente meilinglisti? : jah
+Vahetuse vanema roll
+Ligipääs töötajate andmebaasile: on
+Töögraafikute koostamine ja muutmine: on
+Töötajate tööaja alguse ja lõpu määramine: on
+Ettekandja rolli täitmine: on
+Kas võib olla rohkem kui üks vahetuse vanem vahetuse jooksul: jah
+Saab fikseerida kassa alg- ja lõppseisu: jah
+Kas on võimalus määrata pausiajad töögraafikus ? : on
+Mis andmetele ligipääs tal on ? : Kontaktandmed
+Kuna vahetuse juhata täidab algusaega ja lõpuaega? Saab lisada igal ajal
+Kas saab teavitada ladu mingi toote otsasaamisest? : jah
+Restorani juhataja roll
+Täielik ligipääs töötajate andmebaasile: jah.
+Saavad määrata töötajate palga: jah.
+Saavad uuendada oma restorani inventari andmebaasi: jah.
+Saavad laost tellida juurde tooteid: jah.
+Määravad kuupakkumised andmebaasis: jah.
+Aruannete koostamine juhtkonna jaoks: jah.
+Kuidas käib kampaaniapakkumiste saatmine? : juhataja saab muuta igakuiselt automaatselt saadetava e-maili sisu.
+Saab teateid laoseisust: jah.
+Vahetuse vanema / ettekandja rolli täitmine : ei.
+Ettevõtte juhtkonna roll
+Kas saab vaadata iga restorani kasumiaruannet? : Jah
+Kas on võimalik näha erinevate toodete müümise koguseid erinevate regioonide ja restoranide kaupa? : Jah
+Kas on võimalik määrata toodetele soodustusi?: Ei.
+Kas on vaja ligipääsu kõikidele andmebaasile? Ei.
+Kas on vaja ligipääsu juhatajate andmebaasile? Jah
+Mida on vaja juhatajate andmebaasist näha? Kontaktandmeid, nimesid, kuukäivet.
+Kokkuvõte nõuetest
+Ettekandja
+Ettekandja peab saama tellimusi sisestada.
+
+Peab saama tellimuse eest tasu vastu võtta.
+
+Tellimus sisestatakse mobiilsesse seadmesse, mis sünkroniseerub keskse kassasüsteemiga leti taga.
+
+Seadmeks on Android nutitelefon.
+
+Toote valimine nimekirjast, vajadusel saab ka otsinguvälja kasutada või grupeerida kategooria järgi.
+
+Tellimuse eest ei pea kohe maksma, arve võib lahti jätta.
+
+Arvet saab jagada laudkonna vahel.
+
+Arve eest saab maksta krediitkaardiga.
+
+Sobivad Visa ja MasterCard? krediitkaardid.
+
+Püsikliendi avastamisel arve rekalkuleerimine.
+
+Tšekkidega ei saa maksta.
+
+Ei saa tipiraha eraldi vormistada.
+
+Arvet saab redigeerida (tellitud kauba eemaldamine / juurde lisamine).
+
+Arvet saab üle anda teisele ettekandjale.
+
+Arve lõpetamise meeldetuletust ei ole.
+
+Suurema summa sisestamisel tagatisraha kalkuleerimine.
+
+Arvest on võimalik loobuda.
+
+Ei ole lubatud kaupa juurde tellida.
+
+Ettekandja näeb tema vastutuse all olevate tellimuste ajalugu.
+
+Ei saa ise töö algus- ja lõpuaega määrata.
+
+Antud ajahetkel täitmata tellimuste kuvamine.
+
+Ettekandjal ligipääs püsiklientide nimede andmebaasile.
+
+Inventari andmebaasist toodete otsing.
+
+Ettekandja näeb püsikliendi pakkumisi.
+
+Allahindluse arvestamine püsikliendi puhul.
+
+Saab lisada uusi püsikliente.
+
+Saab lisada püsikliente meilinglisti.
+
+Vahetuse vanem
+Vahetuse vanemal ligipääs töötajate andmebaasile (kontaktinformatsioon, tööajad).
+
+Töögraafikute koostamine ja muutmine.
+
+Töötajate tööaja alguse ja lõpu määramine.
+
+Vahetuse vanem saab täita ettekandja rolli.
+
+Korraga saab olla mitu vahetuse vanemat.
+
+Kassa alg- ja lõppseisu fikseerimine.
+
+Pausiaegade määramine.
+
+Töötajate tööpäeva algus- ja lõpuaja määramine igal ajal.
+
+Saab teavitada ladu toote otsasaamisest.
+
+Restorani juhataja
+Restorani juhatajal täielik ligipääs töötajate andmebaasile.
+
+Palga määramine / muutmine.
+
+Restorani inventari andmebaasi uuendamine.
+
+Kuupakkumiste määramine andmebaasis.
+
+Aruannete koostamine juhtkonna jaoks.
+
+Igakuiselt saadetakse automaatselt kampaaniapakkumiste e-mail.
+
+Saab muuta kampaaniapakkumiste e-maili.
+
+Saab teateid laoseisust.
+
+Ei saa täita vahetuse vanema / ettekandja rolli.
+
+Ettevõtte juhtkond
+Juhtkond saab vaadata restoranide kasumiaruannet.
+
+Saab näha müüdud koguseid erinevate regioonide ja restoranide kaupa. Ligipääs juhatajate / restoranide andmebaasile.
+
+Pole võimalik kuusoodustusi määrata.
+
+Ligipääs ülejäänud andmebaasidesse pole vajalik.
+
+Süsteemi kasutatavus ja jõudlus (SMART nõuded)
+Kasutatavus
+Lihtsus
+Ideaalis võiks tavalisemad ülesanded, nagu tellimuste täitmine, uute tellimuste avamine ja andmebaasidest esemete (toitude, jookide) otsimine olla võimalikult lihtne. Lihtsuse all võiks siis mõelda seda, et kui palju klikke või nupuvajutusi selle toimingu jaoks kulub. Kümme klikki võiks olla see piir, millega saaks neid lihtsamaid tegevusi sooritada. Üleliigsete nupude ja funktsioonide vältimine jooksval momendil. Kui kasutaja valis "uus tellimus" , siis talle ei kuvata enam sama nupu , vaid pakutakse valida tooteid või loobuda tellimusest või arve lõpetamist.
+
+Kiirus
+Tellimuse vastuvõtmisel on tähtis toode kiiresti leida. Internetiühenduse 10Mb/s, paketisuurustega maksimaalselt 5kb/s ei tohi autocomplete kulutada vastete leidmisele rohkem kui 1 sekund. Toodete valimisel saab kasutada otsimisvälja koos kategooria valikuga, mis kiirendab otsimisprotsessi.
+
+Täpsus
+Täpsuse hindamiseks tuleb tõdeda tõsiasja, et inimesed eksivad, sestap võiks alati olla mingisugune “undo” süsteem või ka lihtsamate vigade jaoks mingitsorti automaatne süsteem mis teavitaks kasutajat ja ka kuvaks vihjeid kuidas seda välitda järgmine kord. Süsteemi häirivate vigade tegemine peaks olema välditav. Kasutajale pakutakse neid funktsioone , mis on lubatud tema gruppile. Tõsiste operatsioonide puhul dialoogaken võib hoiatada kasutajat, pakkudes jah/ei vastust.
+
+Meeldejäädavus
+Kui tegevused kooslevad väga paljudest sammudest, siis nad ununevad. Tegevusel nagu tellimuse kirjapanekul peaks olema näha sammude järjestus (“toote otsing” -> “koguse määramine” -> “arve väljatrükk”).
+
+Keerukus
+Mida kergem on programmi kasutada, seda lihtsam on vigu vältida ja ka töötajatel meeldivam kasutada. Kui programm oleks liialt keeruline, kuluks nõnda suure firma töötajate koolitamistele väga palju resurssi. Vähese keerukuse nõue on täidetud, kui üle 90% uutest töötajatest suudavad esimese kahe tunni jooksul süsteemi kasutamise selgeks õppida. Ikoonid peavad olema mõistliku suurusega ja erineda kas värvilises või stiili mõttes nende eesmärkide loogika järgi.
+
+Jõudlus
+Andmevahetuse kiirus
+Andmebaasiga suhtlemiseks peab valima vastava laiusega andmekanali , arvestades ,et andmepakettide sees liikuvad SQL päringud ja nendele vastused , jätkub suhteliselt kitsasest andmekanalist 512 KB/s ühe online kliendi jaoks.
+
+Süsteemi stabiilsus
+Serveri downtime kõige enam 5h/kuu. Siia on arvestatud nii öised hooldused kui ka kontrolli alt väljas olevad crashimised. Downtime’i minimaliseerimine on tähtis, kuna ettevõte ei saa tööd jätkata selle ajal.
+
+Koormuse taluvus
+Süsteem ei tohi kaotada märgatavat jõudlust kuni 500 samaaegse kasutaja korral. Arvestades ettevõtte plaani laieneda 100 restoranini on see tähtis, kuna siis on süsteemi korraga kasutamas paljud teenindajad.
+
+Riistvara valik
+Riistvara valik : Seadme riistvara peab suutma toetama mainitud POS- i . Ise tarkvara võib olla installeeritud erinevates mobiilsetes seadmetes (mugavuse tõttu) ning protsessor ja mälu on prioriteediks , et tagada kiiret JVM tööd ning töö stabiilsust suure arvuga sisse laetud objektidega ( juhul kui tuleb palju “rippuvaid arveid” , mille arv võib olla rohkem kui 20).
+
+Turvalisus
+Andmed liiguvad läbi võrgu krüpteerituna, seda tagavad standardsed Java mehhanismid. Andmebaasi parool on vähemalt 8 täheline koos numbritega ning suurte tähtedega. Samuti client OS on turvaline (mitte Windows), nt. üks Linuxi distributsioonidest. Võimalikult vähe hoida clientis, et koodi dekompileerides mitte ohustada turvalisust.
