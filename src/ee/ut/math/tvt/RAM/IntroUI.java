@@ -20,7 +20,7 @@ public class IntroUI extends JFrame{
 	
 	private BufferedImage image ;
 	private JLabel teamName, teamLeader, leaderMail, teamMembers, softVer, logo;
-	
+	 
 	public IntroUI(){
 		
 		//Initialize components
@@ -94,8 +94,7 @@ public class IntroUI extends JFrame{
 		teamLeader = new JLabel("Team leader Erki Nool");
 		leaderMail = new JLabel("nool@hot.ee");
 		teamMembers = new JLabel("Ragnar Vent, Andre Peedosaar, Martin K\u00FCtt");
-		softVer = new JLabel("Current version: "+prop.getProperty("build.major.number")+"."+prop.getProperty("build.minor.number")
-				+"."+prop.getProperty("build.revision.number"));
+		softVer = new JLabel("Current version: "+prop.getProperty("build.number"));
 		
 		
 		Font f = new Font("Serif", Font.BOLD, 19);
