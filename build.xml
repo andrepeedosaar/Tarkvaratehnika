@@ -2,12 +2,12 @@
 <project basedir="." name="POS" default="build">
 
 	<property name="build.dir" value="${basedir}/build"/>
-	<property name="build.classes.dir" value="${build.dir}/classes"/>
+	<property name="build.classes.dir" value="${build.dir}/classes/"/>
 	<property name="src.dir" value="${basedir}/src"/>
 	<property name="build.jar.dir" value="${build.dir}/jar"/>
-	<property file="${src.dir}/resources/version.properties"/>
+	<property name="resource.dir" value="${basedir}/resources"/>
 
-	<!-- Definitions of classpath variants used for different tasks -->
+	<!-- Classpath definitions -->
 	<path id="compile.classpath">
 		<fileset dir="lib">
 			<include name="*.jar"/>
@@ -16,14 +16,13 @@
 
 	<path id="test.classpath">
 		<pathelement location="${build.classes.dir}"/>
-		<!-- configuration -->
 		<pathelement location="${conf.dir}"/>
 		<fileset dir="lib">
 			<include name="*.jar"/>
 		</fileset>
 	</path>
 
-	<!-- Definitions of runnable ant targets  -->
+	<!-- Runnable definitions  -->
          
     <!-- Remove previous files created by previous build  -->
 	<target name="clean" description="Clean up build system results">
@@ -46,30 +45,41 @@
             debuglevel="lines,vars,source"
             encoding="utf-8"
             compiler="modern"
-            target="1.7"
-            source="1.7"
 			includeantruntime="false">
 			<classpath refid="compile.classpath"/>
 		</javac>
+		<copy todir="${build.classes.dir}">  
+    		<fileset dir="${resource.dir}">  
+        		<include name="**"/>  
+   			 </fileset>  
+		</copy> 
 	</target>
 	
 	<!-- Create a jar file in build/jar folder -->
 	<target name="dist" depends="build" description="Create a jar file">
 	    <mkdir dir="${build.jar.dir}"/>
-		<jar destfile="${build.jar.dir}\RAM.jar" basedir="${build.classes.dir}">
+		<jar destfile="${build.jar.dir}\RAM.jar" basedir="${build.dir}/classes">
+		    <zipgroupfileset includes="*.jar" dir="${basedir}/lib"/>
       		<manifest>
-        		<attribute name="Main-Class" value="ee.ut.math.tvt.RAM.Intro" />
+        		<attribute name="Main-Class" value="ee/ut/math/tvt/RAM/Intro" />
       		</manifest>
     	</jar>
-   		<entry key="build.revision.number" type="int" operation="+" value="1" />
-   		<var name="build.number" unset="true"/>
-   		<property name="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}"/>
+    	
+    	<propertyfile file="${resource.dir}/version.properties">
+				<entry key="build.revision.number" type="int" operation="+" value="1" />
+		</propertyfile>
+		
+    	 <property file="${resource.dir}/version.properties">
+    	 </property>
+    	 
+    	 <propertyfile file="${resource.dir}/version.properties">
+				<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
+		</propertyfile>
+    	
 	</target>
 	
 	<!-- Run the created jar file -->
 	<target name="jrun" depends="dist" description="Run the application using jar file">
 	    <java jar="${build.jar.dir}/RAM.jar" fork="true"/>
 	</target>
-
-
 </project>

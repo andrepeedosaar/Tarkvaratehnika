@@ -26,9 +26,7 @@ public class IntroUI extends JFrame{
 		//Initialize components
 		try{
 			initTextFields();
-		}catch(IOException e){
-			if(logo==null) logo = new JLabel("No logo :/");
-			e.printStackTrace();}
+		}catch(IOException e){e.printStackTrace();}
 		
 		//Set layout & place components
 		setLayout(new GridBagLayout());
@@ -85,10 +83,10 @@ public class IntroUI extends JFrame{
 	private void initTextFields() throws IOException{
 		//Get current version
 		Properties prop = new Properties();
-		prop.load(getClass().getResourceAsStream("/resources/version.properties"));
+		prop.load(getClass().getResourceAsStream("/version.properties"));
 		
 		//Get logo
-		image = ImageIO.read(getClass().getResource("/resources/ram_logo.png"));
+		image = ImageIO.read(getClass().getResource("/images/ram_logo.png"));
 		logo = new JLabel(new ImageIcon(image));
 		
 	
