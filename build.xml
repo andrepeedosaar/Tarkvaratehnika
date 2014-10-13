@@ -56,15 +56,9 @@
 	
 	<!-- Create a jar file in build/jar folder -->
 	<target name="dist" depends="build" description="Create a jar file">
-	    <mkdir dir="${build.jar.dir}"/>
-		<jar destfile="${build.jar.dir}\RAM.jar" basedir="${build.dir}/classes">
-		    <zipgroupfileset includes="*.jar" dir="${basedir}/lib"/>
-      		<manifest>
-        		<attribute name="Main-Class" value="ee/ut/math/tvt/RAM/Intro" />
-      		</manifest>
-    	</jar>
-    	
-    	<propertyfile file="${resource.dir}/version.properties">
+	    
+	    <!-- Update version.properties -->
+	    <propertyfile file="${resource.dir}/version.properties">
 				<entry key="build.revision.number" type="int" operation="+" value="1" />
 		</propertyfile>
 		
@@ -74,6 +68,16 @@
     	 <propertyfile file="${resource.dir}/version.properties">
 				<entry key="build.number" value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
 		</propertyfile>
+	    
+	    <!-- Create jar -->
+	    <mkdir dir="${build.jar.dir}"/>
+		<jar destfile="${build.jar.dir}\RAM.jar" basedir="${build.dir}/classes">
+		    <zipgroupfileset includes="*.jar" dir="${basedir}/lib"/>
+      		<manifest>
+        		<attribute name="Main-Class" value="ee/ut/math/tvt/RAM/Intro" />
+      		</manifest>
+    	</jar>
+    	
     	
 	</target>
 	
