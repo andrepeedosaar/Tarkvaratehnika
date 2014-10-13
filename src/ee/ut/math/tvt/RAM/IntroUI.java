@@ -13,90 +13,89 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+public class IntroUI extends JFrame {
 
-public class IntroUI extends JFrame{
-	
 	private static final long serialVersionUID = 1L;
-	
-	private BufferedImage image ;
-	private JLabel teamName, teamLeader, leaderMail, teamMembers, softVer, logo;
-	 
-	public IntroUI(){
-		
-		//Initialize components
-		try{
+
+	private BufferedImage image;
+	private JLabel teamName, teamLeader, leaderMail, teamMembers, softVer,
+			logo;
+
+	public IntroUI() {
+
+		// Initialize components
+		try {
 			initTextFields();
-		}catch(IOException e){e.printStackTrace();}
-		
-		//Set layout & place components
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Set layout & place components
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = getConstraints();
 
-		//Logo
+		// Logo
 		add(logo, gc);
-		
-		//Team name
-		gc.gridy=1;
-		add(teamName, gc);
-		
-		//Team leader
-		gc.gridy=2;
-		add(teamLeader,gc);
-		
-		//Team leader mail
-		gc.gridy=3;
-		add(leaderMail,gc);
-				
-		//Team members
-		gc.gridy=4;
-		add(teamMembers,gc);
-		
-		//Software version
-		gc.gridy=5;
-		add(softVer,gc);
 
-		
-		//Adjust window
+		// Team name
+		gc.gridy = 1;
+		add(teamName, gc);
+
+		// Team leader
+		gc.gridy = 2;
+		add(teamLeader, gc);
+
+		// Team leader mail
+		gc.gridy = 3;
+		add(leaderMail, gc);
+
+		// Team members
+		gc.gridy = 4;
+		add(teamMembers, gc);
+
+		// Software version
+		gc.gridy = 5;
+		add(softVer, gc);
+
+		// Adjust window
 
 		int width = 700;
-	    int height = 500;
-	    setSize(width, height);
-	    Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	    setLocation((screen.width - width) / 2, (screen.height - height) / 2);
-	    getContentPane().setBackground(Color.white);
-		
-		
+		int height = 500;
+		setSize(width, height);
+		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+		setLocation((screen.width - width) / 2, (screen.height - height) / 2);
+		getContentPane().setBackground(Color.white);
+
 	}
-	
-	private GridBagConstraints getConstraints(){
+
+	private GridBagConstraints getConstraints() {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.fill = GridBagConstraints.VERTICAL;
 		gc.anchor = GridBagConstraints.CENTER;
 		gc.gridwidth = GridBagConstraints.REMAINDER;
 		gc.weightx = 1.0d;
-	    gc.weighty = 1.0;
-		
+		gc.weighty = 1.0;
+
 		return gc;
 	}
-	
-	
-	private void initTextFields() throws IOException{
-		//Get current version
+
+	private void initTextFields() throws IOException {
+		// Get current version
 		Properties prop = new Properties();
 		prop.load(getClass().getResourceAsStream("/version.properties"));
-		
-		//Get logo
+
+		// Get logo
 		image = ImageIO.read(getClass().getResource("/images/ram_logo.png"));
 		logo = new JLabel(new ImageIcon(image));
-		
-	
+
 		teamName = new JLabel("Team RAM");
 		teamLeader = new JLabel("Team leader Erki Nool");
 		leaderMail = new JLabel("nool@hot.ee");
-		teamMembers = new JLabel("Ragnar Vent, Andre Peedosaar, Martin K\u00FCtt");
-		softVer = new JLabel("Current version: "+prop.getProperty("build.number"));
-		
-		
+		teamMembers = new JLabel(
+				"Ragnar Vent, Andre Peedosaar, Martin K\u00FCtt");
+		softVer = new JLabel("Current version: "
+				+ prop.getProperty("build.number"));
+
 		Font f = new Font("Serif", Font.BOLD, 19);
 		teamName.setFont(f);
 		teamLeader.setFont(f);
