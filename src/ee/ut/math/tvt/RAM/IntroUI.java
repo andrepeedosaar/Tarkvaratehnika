@@ -18,8 +18,7 @@ public class IntroUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private BufferedImage image;
-	private JLabel teamName, teamLeader, leaderMail, teamMembers, softVer,
-			logo;
+	private JLabel teamName, teamLeader, leaderMail, teamMembers, softVer, logo;
 
 	public IntroUI() {
 
@@ -89,12 +88,10 @@ public class IntroUI extends JFrame {
 		logo = new JLabel(new ImageIcon(image));
 
 		teamName = new JLabel("Team RAM");
-		teamLeader = new JLabel("Team leader Erki Nool");
+		teamLeader = new JLabel("Team leader Martin Kütt");
 		leaderMail = new JLabel("nool@hot.ee");
-		teamMembers = new JLabel(
-				"Ragnar Vent, Andre Peedosaar, Martin K\u00FCtt");
-		softVer = new JLabel("Current version: "
-				+ prop.getProperty("build.number"));
+		teamMembers = new JLabel("Ragnar Vent, Andre Peedosaar, Martin K\u00FCtt");
+		softVer = new JLabel("Current version: " + prop.getProperty("build.number"));
 
 		Font f = new Font("Serif", Font.BOLD, 19);
 		teamName.setFont(f);
