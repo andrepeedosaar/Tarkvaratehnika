@@ -89,7 +89,7 @@ public class IntroUI extends JFrame {
 
 		teamName = new JLabel("Team RAM");
 		teamLeader = new JLabel("Team leader Martin Kütt");
-		leaderMail = new JLabel("nool@hot.ee");
+		leaderMail = new JLabel("teamram@hot.ee");
 		teamMembers = new JLabel("Ragnar Vent, Andre Peedosaar, Martin K\u00FCtt");
 		softVer = new JLabel("Current version: " + prop.getProperty("build.number"));
 
