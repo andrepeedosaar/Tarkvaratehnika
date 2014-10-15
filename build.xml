@@ -23,7 +23,7 @@
 
 	<!-- Runnable definitions -->
 
-	<!-- Remove previous files created by previous build -->
+	<!-- Remove files created by previous build -->
 	<target name="clean" description="Clean up build system results">
 		<delete dir="${build.dir}" />
 	</target>
