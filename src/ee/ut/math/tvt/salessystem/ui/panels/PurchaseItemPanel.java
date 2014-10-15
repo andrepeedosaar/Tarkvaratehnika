@@ -29,7 +29,7 @@ public class PurchaseItemPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     // Text field on the dialogPane
-    private JComboBox barCodeCombo;
+    private JComboBox<String> barCodeCombo;
     private JTextField quantityField;
     private JTextField barField;
     private JTextField priceField;
@@ -83,7 +83,7 @@ public class PurchaseItemPanel extends JPanel {
         panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
         //Initialize combobox
-        barCodeCombo = new JComboBox(model.getWarehouseTableModel().getAllNames());
+        barCodeCombo = new JComboBox<String>(model.getWarehouseTableModel().getAllNames());
         
         // Initialize the textfields
         quantityField = new JTextField("1");
