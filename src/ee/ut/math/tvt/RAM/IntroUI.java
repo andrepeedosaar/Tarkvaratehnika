@@ -64,6 +64,7 @@ public class IntroUI extends JFrame {
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screen.width - width) / 2, (screen.height - height) / 2);
 		getContentPane().setBackground(Color.white);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 

@@ -83,4 +83,12 @@
 	<target name="jrun" depends="dist" description="Run the application using jar file">
 		<java jar="${build.jar.dir}/RAM.jar" fork="true" />
 	</target>
+	
+	
+	<!-- Run salessystem in console -->
+	<target name="runc" depends="build" description="Run the application (console)">
+	<java classname="ee.ut.math.tvt.[team].Intro" classpathref="test.classpath" fork="yes">
+		<arg value="console" />
+	</java>
+</target>
 </project>
