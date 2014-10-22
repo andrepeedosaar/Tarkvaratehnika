@@ -133,8 +133,6 @@ public class PurchaseTab {
 
 
 
-
-
   /* === Event handlers for the menu buttons
    *     (get executed when the buttons are clicked)
    */
