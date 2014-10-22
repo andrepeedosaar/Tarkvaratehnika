@@ -80,18 +80,22 @@ public class IntroUI extends JFrame {
 
 	private void initTextFields() throws IOException {
 		// Get current version
-		Properties prop = new Properties();
-		prop.load(getClass().getResourceAsStream("/version.properties"));
+		Properties verProp = new Properties();
+		verProp.load(getClass().getResourceAsStream("/version.properties"));
+		
+		
+		Properties appProp = new Properties();
+		appProp.load(getClass().getResourceAsStream("/application.properties"));
 
 		// Get logo
 		image = ImageIO.read(getClass().getResource("/images/ram_logo.png"));
 		logo = new JLabel(new ImageIcon(image));
 
-		teamName = new JLabel("Team RAM");
-		teamLeader = new JLabel("Team leader Martin Kütt");
-		leaderMail = new JLabel("teamram@hot.ee");
-		teamMembers = new JLabel("Ragnar Vent, Andre Peedosaar, Martin K\u00FCtt");
-		softVer = new JLabel("Current version: " + prop.getProperty("build.number"));
+		teamName = new JLabel(appProp.getProperty("teamname"));
+		teamLeader = new JLabel(appProp.getProperty("teamleader"));
+		leaderMail = new JLabel(appProp.getProperty("leadermail"));
+		teamMembers = new JLabel(appProp.getProperty("teammembers"));
+		softVer = new JLabel("Current version: " + verProp.getProperty("build.number"));
 
 		Font f = new Font("Serif", Font.BOLD, 19);
 		teamName.setFont(f);

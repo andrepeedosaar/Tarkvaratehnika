@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.panels.ConfirmOrderPane;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 import java.awt.Color;
 import java.awt.Component;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 
@@ -165,6 +167,17 @@ public class PurchaseTab {
 
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
+	  
+	  JOptionPane.showOptionDialog(null,
+              new ConfirmOrderPane(),
+              "Confirm order dialog",
+              JOptionPane.DEFAULT_OPTION,
+              JOptionPane.DEFAULT_OPTION,
+              null,
+              new Object[]{},
+              null );
+	  
+	  
     log.info("Sale complete");
     try {
       log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
