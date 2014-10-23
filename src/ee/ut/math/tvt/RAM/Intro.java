@@ -34,7 +34,7 @@ public class Intro {
 
 			introUI.setAlwaysOnTop(false);
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(3);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

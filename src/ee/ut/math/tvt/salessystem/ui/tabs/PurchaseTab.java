@@ -166,8 +166,9 @@ public class PurchaseTab {
   /** Event handler for the <code>submit purchase</code> event. */
   protected void submitPurchaseButtonClicked() {
 	  
+	  //Create 
 	  JOptionPane.showOptionDialog(null,
-              new ConfirmOrderPane(),
+              new ConfirmOrderPane(model),
               "Confirm order dialog",
               JOptionPane.DEFAULT_OPTION,
               JOptionPane.DEFAULT_OPTION,
@@ -175,8 +176,7 @@ public class PurchaseTab {
               new Object[]{},
               null );
 	  
-	  
-    log.info("Sale complete");
+
     try {
       log.debug("Contents of the current basket:\n" + model.getCurrentPurchaseTableModel());
       domainController.submitCurrentPurchase(

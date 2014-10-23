@@ -16,7 +16,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 	
 
 	public void submitCurrentPurchase(List<SoldItem> goods) throws VerificationFailedException{
-		throw new VerificationFailedException("Underaged!");
+//		throw new VerificationFailedException("Underaged!");
 		// XXX - Submit current purchase
 	}
 
