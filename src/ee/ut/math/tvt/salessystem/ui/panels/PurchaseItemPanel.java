@@ -174,6 +174,8 @@ public class PurchaseItemPanel extends JPanel {
 			int quantity;
 			try {
 				quantity = Integer.parseInt(quantityField.getText());
+				if(quantity < 0)
+					quantity = -quantity;
 			} catch (NumberFormatException ex) {
 				quantity = 1;
 			}

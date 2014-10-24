@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
@@ -26,7 +28,15 @@ public class HistoryTab {
 	public Component draw() {
 		JPanel panel = new JPanel();
 		
+		//Create new JTable
 		JTable table = new JTable(model.getSalesHistoryModel());
+		
+		//Add table listener. Shows order details if specific row is selected
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	            showOrder();
+	        }
+	    });
 
 	    JTableHeader header = table.getTableHeader();
 	    header.setReorderingAllowed(false);
@@ -43,5 +53,8 @@ public class HistoryTab {
 	    panel.add(scrollPane, gc);
 		
 		return panel;
+	}
+	private void showOrder(){
+		
 	}
 }
