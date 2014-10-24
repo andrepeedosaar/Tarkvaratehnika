@@ -1,19 +1,27 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.panels.ConfirmOrderPane;
+import ee.ut.math.tvt.salessystem.ui.panels.StockAddItemPane;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
 
-public class StockTab {
+public class StockTab{
 
   private JButton addItem;
 
@@ -22,7 +30,7 @@ public class StockTab {
   public StockTab(SalesSystemModel model) {
     this.model = model;
   }
-
+  
   // warehouse stock tab - consists of a menu and a table
   public Component draw() {
     JPanel panel = new JPanel();
@@ -59,6 +67,26 @@ public class StockTab {
     gc.weightx = 0;
 
     addItem = new JButton("Add");
+    addItem.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            addstufftowarehouse();
+          }
+
+		private void addstufftowarehouse() {
+			JOptionPane.showOptionDialog(null,
+		              new StockAddItemPane(model),
+		              "Warehouse stock add",
+		              JOptionPane.DEFAULT_OPTION,
+		              JOptionPane.DEFAULT_OPTION,
+		              null,
+		              new Object[]{},
+		              null );
+			
+		}
+    });
+    
+    
+    
     gc.gridwidth = GridBagConstraints.RELATIVE;
     gc.weightx = 1.0;
     panel.add(addItem, gc);

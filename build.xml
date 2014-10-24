@@ -22,6 +22,27 @@
 	</path>
 
 	<!-- Runnable definitions -->
+	
+	<!--Git commit command -->
+		<target name="commit" description="Commit description">
+			<attribute name = "path" /> 
+			<attribute name = "message" /> 
+			<sequential> 
+				<git command="commit" dir="@{path}"> 
+					<args> 
+						<arg value= "@{message}" /> 
+					</args> 
+				</git> 
+				<git command = "push" dir="@{path}" />
+			</sequential> 
+		</target>
+		
+	<!--Git tag command -->
+		<target name="tag" description="Tag name">
+			<attribute name = "comment" />
+				<git command="tag" dir="@{comment}">
+				</git> 
+		</target>
 
 	<!-- Remove files created by previous build -->
 	<target name="clean" description="Clean up build system results">
