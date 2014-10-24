@@ -16,7 +16,6 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	public void submitCurrentPurchase(List<SoldItem> goods)
 			throws VerificationFailedException {
-		
 		// XXX - Submit current purchase
 
 	}

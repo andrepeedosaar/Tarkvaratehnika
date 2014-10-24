@@ -12,87 +12,86 @@ import ee.ut.math.tvt.salessystem.domain.data.DisplayableItem;
  * Generic table model implementation suitable for extending.
  */
 public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
-        AbstractTableModel {
+		AbstractTableModel {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    protected List<T> rows;
-    protected final String[] headers;
-    
-    //edit
-    protected final List<String> names;
+	protected List<T> rows;
+	protected final String[] headers;
 
-    public SalesSystemTableModel(final String[] headers) {
-        this.headers = headers;
-        rows = new ArrayList<T>();
-        names = new ArrayList<String>();
-    }
+	// edit
+	protected final List<String> names;
 
-    /**
-     * @param item
-     *            item describing selected row
-     * @param columnIndex
-     *            selected column index
-     * @return value displayed in column with specified index
-     */
-    protected abstract Object getColumnValue(T item, int columnIndex);
+	public SalesSystemTableModel(final String[] headers) {
+		this.headers = headers;
+		rows = new ArrayList<T>();
+		names = new ArrayList<String>();
+	}
 
-    public int getColumnCount() {
-        return headers.length;
-    }
+	/**
+	 * @param item
+	 *            item describing selected row
+	 * @param columnIndex
+	 *            selected column index
+	 * @return value displayed in column with specified index
+	 */
+	protected abstract Object getColumnValue(T item, int columnIndex);
 
-    @Override
-    public String getColumnName(final int columnIndex) {
-        return headers[columnIndex];
-    }
+	public int getColumnCount() {
+		return headers.length;
+	}
 
-    public int getRowCount() {
-        return rows.size();
-    }
+	@Override
+	public String getColumnName(final int columnIndex) {
+		return headers[columnIndex];
+	}
 
-    public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return getColumnValue(rows.get(rowIndex), columnIndex);
-    }
+	public int getRowCount() {
+		return rows.size();
+	}
 
-    // search for item with the specified id
-    
-    public T getItemById(final long id) {
-        for (final T item : rows) {
-            if (item.getId() == id)
-                return item;
-        }
-        throw new NoSuchElementException();
-    }
-    
-    public T getItemByName(final String name) {
-        for (final T item : rows) {
-            if (item.getName() == name)
-                return item;
-        }
-        throw new NoSuchElementException();
-    }
-    
+	public Object getValueAt(final int rowIndex, final int columnIndex) {
+		return getColumnValue(rows.get(rowIndex), columnIndex);
+	}
 
-    public List<T> getTableRows() {
-        return rows;
-    }
-    public String[] getAllNames() {
-        return names.toArray(new String[names.size()]);
-    }
+	// search for item with the specified id
 
-    public void clear() {
-        rows = new ArrayList<T>();
-        fireTableDataChanged();
-    }
+	public T getItemById(final long id) {
+		for (final T item : rows) {
+			if (item.getId() == id)
+				return item;
+		}
+		return null;
+	}
 
-    public void populateWithData(final List<T> data) {
-        rows.clear();
-        rows.addAll(data);
-        
-        for(final T elem : rows){
-        	names.add(elem.getName());
-        }
-    }
-    
-    
+	public T getItemByName(final String name) {
+		for (final T item : rows) {
+			if (item.getName() == name)
+				return item;
+		}
+		throw new NoSuchElementException();
+	}
+
+	public List<T> getTableRows() {
+		return rows;
+	}
+
+	public String[] getAllNames() {
+		return names.toArray(new String[names.size()]);
+	}
+
+	public void clear() {
+		rows = new ArrayList<T>();
+		fireTableDataChanged();
+	}
+
+	public void populateWithData(final List<T> data) {
+		rows.clear();
+		rows.addAll(data);
+
+		for (final T elem : rows) {
+			names.add(elem.getName());
+		}
+	}
+
 }

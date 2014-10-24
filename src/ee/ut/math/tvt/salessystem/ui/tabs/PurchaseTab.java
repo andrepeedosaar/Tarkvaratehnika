@@ -1,6 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.data.SoldHistoryItem;
+
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
@@ -12,8 +12,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -161,15 +160,13 @@ public class PurchaseTab {
 		try {
 			log.debug("Contents of the current basket:\n"
 					+ model.getCurrentPurchaseTableModel());
-			
-			
+
 			JOptionPane.showOptionDialog(null, new ConfirmOrderPane(model),
 					"Confirm order dialog", JOptionPane.DEFAULT_OPTION,
 					JOptionPane.DEFAULT_OPTION, null, new Object[] {}, null);
-			
+
 			domainController.submitCurrentPurchase(model
 					.getCurrentPurchaseTableModel().getTableRows());
-
 
 			endSale();
 			model.getCurrentPurchaseTableModel().clear();
@@ -177,7 +174,6 @@ public class PurchaseTab {
 			log.error(e1.getMessage());
 		}
 	}
-
 
 	/*
 	 * === Helper methods that bring the whole purchase-tab to a certain state

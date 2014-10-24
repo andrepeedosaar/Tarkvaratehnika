@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import javax.swing.*;
 
 import org.apache.log4j.Logger;
@@ -14,11 +13,9 @@ import java.awt.Window;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 import ee.ut.math.tvt.salessystem.domain.data.SoldHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-
 
 public class ConfirmOrderPane extends JPanel {
 
@@ -28,7 +25,6 @@ public class ConfirmOrderPane extends JPanel {
 	private JTextField payAmountField;
 	private JButton cancelButton, acceptButton;
 
-	
 	private static final Logger log = Logger.getLogger(ConfirmOrderPane.class);
 
 	// System model model
@@ -36,7 +32,7 @@ public class ConfirmOrderPane extends JPanel {
 
 	public ConfirmOrderPane(SalesSystemModel model) {
 
-		// Initialize model/success 
+		// Initialize model/success
 		this.model = model;
 
 		// Initialize components
@@ -83,18 +79,17 @@ public class ConfirmOrderPane extends JPanel {
 	}
 
 	private void initComp() {
-		//Get total sum
+		// Get total sum
 		int sum = 0;
 		for (SoldItem el : model.getCurrentPurchaseTableModel().getTableRows())
-			sum+=el.getSum();
-		
-		
+			sum += el.getSum();
+
 		// Init labels
 		orderSumLabelTxt = new JLabel("Total order sum: ");
 		payAmountLabel = new JLabel("Payment amount:");
 		changeLabelTxt = new JLabel("Change amount: ");
-		
-		orderSumLabelVal =new JLabel(String.valueOf(sum));
+
+		orderSumLabelVal = new JLabel(String.valueOf(sum));
 		changeLabelVal = new JLabel();
 
 		// Init field
@@ -118,69 +113,72 @@ public class ConfirmOrderPane extends JPanel {
 				acceptSaleEventHandler();
 			}
 		});
-		
-		 payAmountField.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					payAmountHandler();
-				}
-			});
+
+		payAmountField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				payAmountHandler();
+			}
+		});
 	}
 
 	protected void cancelSaleEventHandler() {
 		log.info("Sale cancelled!");
-		//Close frame
+		// Close frame
 		Window win = SwingUtilities.getWindowAncestor(cancelButton);
-        win.setVisible(false);
+		win.setVisible(false);
 	}
 
 	protected void acceptSaleEventHandler() {
-		try{
+		try {
 			String tmp = changeLabelVal.getText();
-			if (tmp.length()==0){
+			if (tmp.length() == 0) {
 				calcChange();
-				tmp = changeLabelVal.getText();	
+				tmp = changeLabelVal.getText();
 			}
-			if (Double.parseDouble(tmp)>0){
+			if (Double.parseDouble(tmp) >= 0) {
 
 				log.info("Sale complete");
-				
-				model.getSalesHistoryModel()
-				.addItem(
-						new SoldHistoryItem(getCurrentDate(),
-								getCurrentTime(), model
-										.getCurrentPurchaseTableModel()
+
+				// If sale is successful add it to history
+				model.getSalesHistoryModel().addItem(
+						new SoldHistoryItem(getCurrentDate(), getCurrentTime(),
+								model.getCurrentPurchaseTableModel()
 										.getTableRows()));
-			}
-			else
+
+				// Subtract the amount from warehouse
+				model.getWarehouseTableModel().subtractStock(
+						model.getCurrentPurchaseTableModel().getTableRows());
+
+			} else
 				throw new NumberFormatException();
-		}
-		catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			log.info("Sale failed");
-		}
-		finally{
-			//Close frame
+		} finally {
+			// Close frame
 			Window win = SwingUtilities.getWindowAncestor(acceptButton);
-	        win.setVisible(false);
+			win.setVisible(false);
 		}
 	}
-	
-	protected void payAmountHandler(){
+
+	protected void payAmountHandler() {
 		calcChange();
 	}
-	
-	private void calcChange(){
+
+	private void calcChange() {
 		double change = -1;
-		try{
-			change = Double.parseDouble(payAmountField.getText())-Double.parseDouble(orderSumLabelVal.getText());
-			if (change < 0 )
+		try {
+			change = Double.parseDouble(payAmountField.getText())
+					- Double.parseDouble(orderSumLabelVal.getText());
+			if (change < 0)
 				throw new NumberFormatException();
 			else
-				changeLabelVal.setText(String.format("%.2f", change).replace(",", "."));
-		}catch(NumberFormatException e){
+				changeLabelVal.setText(String.format("%.2f", change).replace(
+						",", "."));
+		} catch (NumberFormatException e) {
 			changeLabelVal.setText("Invalid input");
 		}
 	}
-	
+
 	// Methods for retrieving current date and time
 	public String getCurrentDate() {
 		Date date = new Date();

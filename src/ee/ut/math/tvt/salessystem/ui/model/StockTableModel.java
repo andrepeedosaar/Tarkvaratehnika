@@ -1,9 +1,11 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 /**
@@ -15,7 +17,7 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
 
 	public StockTableModel() {
-		super(new String[] {"Id", "Name", "Price", "Quantity"});
+		super(new String[] { "Id", "Name", "Price", "Quantity" });
 	}
 
 	@Override
@@ -34,8 +36,9 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	}
 
 	/**
-	 * Add new stock item to table. If there already is a stock item with
-	 * same id, then existing item's quantity will be increased.
+	 * Add new stock item to table. If there already is a stock item with same
+	 * id, then existing item's quantity will be increased.
+	 * 
 	 * @param stockItem
 	 */
 	public void addItem(final StockItem stockItem) {
@@ -44,11 +47,10 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
 			log.debug("Found existing item " + stockItem.getName()
 					+ " increased quantity by " + stockItem.getQuantity());
-		}
-		catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			rows.add(stockItem);
-			log.debug("Added " + stockItem.getName()
-					+ " quantity of " + stockItem.getQuantity());
+			log.debug("Added " + stockItem.getName() + " quantity of "
+					+ stockItem.getQuantity());
 		}
 		fireTableDataChanged();
 	}
@@ -72,4 +74,18 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		return buffer.toString();
 	}
 
+	/**
+	 * 
+	 * Reduce stock item quantity using a given list of sold items
+	 * 
+	 * @param soldItems
+	 */
+	public void subtractStock(List<SoldItem> soldItems) {
+		StockItem item;
+		for (SoldItem el : soldItems) {
+			item = getItemById(el.getId());
+			item.setQuantity(item.getQuantity() - el.getQuantity());
+		}
+		fireTableDataChanged();
+	}
 }
