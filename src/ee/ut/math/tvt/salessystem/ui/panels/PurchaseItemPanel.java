@@ -174,15 +174,24 @@ public class PurchaseItemPanel extends JPanel {
 			int quantity;
 			try {
 				quantity = Integer.parseInt(quantityField.getText());
-				if(quantity < 0)
+				if (quantity < 0)
 					quantity = -quantity;
 			} catch (NumberFormatException ex) {
 				quantity = 1;
 			}
-			if (stockItem.getQuantity() > quantity)
+			//If item is already in the purchase list, take that
+			//quantity into account as well
+			SoldItem onListItem = model.getCurrentPurchaseTableModel()
+					.getItemById(stockItem.getId());
+			if(onListItem!=null)
+				quantity+=onListItem.getQuantity();
+			
+			//Make sure we have enough supplies in warehouse
+			if (stockItem.getQuantity() >= quantity) {
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
-			else
+			} else
+
 				JOptionPane
 						.showMessageDialog(
 								new JPanel(),
@@ -192,7 +201,6 @@ public class PurchaseItemPanel extends JPanel {
 										+ " units left.",
 								"Error: out of stock",
 								JOptionPane.ERROR_MESSAGE);
-			;
 		}
 	}
 

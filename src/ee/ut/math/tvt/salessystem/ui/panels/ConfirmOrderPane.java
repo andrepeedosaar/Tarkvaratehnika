@@ -116,7 +116,7 @@ public class ConfirmOrderPane extends JPanel {
 
 		payAmountField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				payAmountHandler();
+				calcChange();
 			}
 		});
 	}
@@ -148,25 +148,21 @@ public class ConfirmOrderPane extends JPanel {
 				// Subtract the amount from warehouse
 				model.getWarehouseTableModel().subtractStock(
 						model.getCurrentPurchaseTableModel().getTableRows());
+				
+				// Close frame
+				Window win = SwingUtilities.getWindowAncestor(acceptButton);
+				win.setVisible(false);
 
 			} else
 				throw new NumberFormatException();
 		} catch (NumberFormatException e) {
-			log.info("Sale failed");
-		} finally {
-			// Close frame
-			Window win = SwingUtilities.getWindowAncestor(acceptButton);
-			win.setVisible(false);
+			changeLabelVal.setText("Invalid input");
 		}
 	}
 
-	protected void payAmountHandler() {
-		calcChange();
-	}
-
-	private void calcChange() {
+	private void calcChange() throws NumberFormatException{
 		double change = -1;
-		try {
+		try{
 			change = Double.parseDouble(payAmountField.getText())
 					- Double.parseDouble(orderSumLabelVal.getText());
 			if (change < 0)
@@ -174,9 +170,12 @@ public class ConfirmOrderPane extends JPanel {
 			else
 				changeLabelVal.setText(String.format("%.2f", change).replace(
 						",", "."));
-		} catch (NumberFormatException e) {
+		}catch (NumberFormatException e) {
 			changeLabelVal.setText("Invalid input");
 		}
+			
+			
+		
 	}
 
 	// Methods for retrieving current date and time

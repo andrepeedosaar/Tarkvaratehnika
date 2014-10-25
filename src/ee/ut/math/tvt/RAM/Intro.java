@@ -7,8 +7,6 @@ import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerIm
 import ee.ut.math.tvt.salessystem.ui.ConsoleUI;
 import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 
-
-
 public class Intro {
 
 	private static final Logger log = Logger.getLogger(Intro.class);

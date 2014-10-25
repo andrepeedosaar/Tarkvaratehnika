@@ -65,8 +65,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		 */
 		SoldItem onListItem = getItemById(item.getId());
 		if (onListItem != null)
-			onListItem.setQuantity(onListItem.getQuantity()
-					+ item.getQuantity());
+			onListItem.setQuantity(item.getQuantity());
 
 		else
 			rows.add(item);

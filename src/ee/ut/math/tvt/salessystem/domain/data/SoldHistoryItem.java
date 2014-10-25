@@ -35,6 +35,10 @@ public class SoldHistoryItem implements Cloneable {
 	public double getTotal() {
 		return total;
 	}
+	
+	public List<SoldItem> getSoldItems() {
+		return soldItems;
+	}
 
 	public double calcTotal() {
 		double a = 0;

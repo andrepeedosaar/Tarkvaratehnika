@@ -27,6 +27,9 @@ public class SalesHistoryModel extends AbstractTableModel {
     public int getRowCount() {
         return rows.size();
     }
+    public SoldHistoryItem getRow(int rowNumber) {
+        return rows.get(rowNumber);
+    }
     
     public Object getValueAt(final int rowIndex, final int columnIndex) {
         return getColumnValue(rows.get(rowIndex), columnIndex);
