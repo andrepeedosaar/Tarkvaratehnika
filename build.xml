@@ -54,6 +54,7 @@
 		<git command="push">
 			<args>
 				<arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
+				<arg value="push.default simple" />
 			</args>
 		</git>
 
