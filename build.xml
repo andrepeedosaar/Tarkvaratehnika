@@ -61,14 +61,14 @@
 
 	<!--Create new tag in github -->
 	<target name="git_tag" description="Create new github tag">
-		<input message="Comment-message" addproperty="comment-message" />
+		<input message="Comment-message" addproperty="message" />
 		<input message="Tag name" addproperty="tag-name" />
 
 		<git command="tag">
 			<args>
 				<arg value="-a" />
-				<arg value="@{tag-name}" />
-				<arg value="-m @{comment-message}" />
+				<arg value="${tag-name}" />
+				<arg value="-m ${message}" />
 			</args>
 		</git>
 		<git command="push">
