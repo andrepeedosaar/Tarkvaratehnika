@@ -41,23 +41,22 @@
 	<!--Commit changes to github -->
 	<target name="git_commit" description="Commit to local repo and push changes">
 		<input message="Commit message" addproperty="commit-message" />
-		<sequential>
-			<git command="add">
-				<args>
-					<arg value="-A" />
-				</args>
-			</git>
-			<git command="commit">
-				<args>
-					<arg value="-m @{commit-message}" />
-				</args>
-			</git>
-			<git command="push">
-				<args>
-					<arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
-				</args>
-			</git>
-		</sequential>
+		<git command="add">
+			<args>
+				<arg value="-A" />
+			</args>
+		</git>
+		<git command="commit">
+			<args>
+				<arg value="-m @{commit-message}" />
+			</args>
+		</git>
+		<git command="push">
+			<args>
+				<arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
+			</args>
+		</git>
+
 	</target>
 
 	<!--Create new tag in github -->
@@ -74,7 +73,7 @@
 			</git>
 			<git command="push">
 				<args>
-				    <arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
+					<arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
 					<arg value="--tags" />
 				</args>
 			</git>
