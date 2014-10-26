@@ -48,7 +48,7 @@
 		</git>
 		<git command="commit">
 			<args>
-				<arg value="-m @{message}" />
+				<arg value="-m ${message}" />
 			</args>
 		</git>
 		<git command="push">
