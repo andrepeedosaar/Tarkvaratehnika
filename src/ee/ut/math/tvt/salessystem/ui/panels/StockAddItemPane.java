@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
 public class StockAddItemPane extends JPanel{
 	
@@ -126,11 +127,17 @@ public class StockAddItemPane extends JPanel{
 			double text_price = Double.parseDouble(add_id.getText());
 			int text_quantity = Integer.parseInt(add_id.getText());
 			
-
-			
-			log.info("Item added to stock");
-			Window win = SwingUtilities.getWindowAncestor(accept);
-	        win.setVisible(false);
+			try{
+				StockTableModel stm = new StockTableModel();
+				stm.addItem(null);
+				
+				log.info("Item added to stock");
+				Window win = SwingUtilities.getWindowAncestor(accept);
+		        win.setVisible(false);
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		catch (Exception e){
 			e.printStackTrace();
