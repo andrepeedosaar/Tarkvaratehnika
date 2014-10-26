@@ -21,28 +21,65 @@
 		</fileset>
 	</path>
 
+
+	<!--Git task used for different git commands -->
+	<macrodef name="git">
+		<attribute name="command" />
+		<attribute name="dir" default="" />
+		<element name="args" optional="true" />
+		<sequential>
+			<echo message="git @{command}" />
+			<exec executable="git" dir="@{dir}">
+				<arg value="@{command}" />
+				<args />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<!-- Runnable definitions -->
-	
-	<!--Git commit command -->
-		<target name="commit" description="Commit description">
-			<attribute name = "path" /> 
-			<attribute name = "message" /> 
-			<sequential> 
-				<git command="commit" dir="@{path}"> 
-					<args> 
-						<arg value= "@{message}" /> 
-					</args> 
-				</git> 
-				<git command = "push" dir="@{path}" />
-			</sequential> 
-		</target>
-		
-	<!--Git tag command -->
-		<target name="tag" description="Tag name">
-			<attribute name = "comment" />
-				<git command="tag" dir="@{comment}">
-				</git> 
-		</target>
+
+	<!--Commit changes to github -->
+	<target name="git_commit" description="Commit to local repo and push changes">
+		<input message="Commit message" addproperty="commit-message" />
+		<sequential>
+			<git command="add">
+				<args>
+					<arg value="-A" />
+				</args>
+			</git>
+			<git command="commit">
+				<args>
+					<arg value="-m @{commit-message}" />
+				</args>
+			</git>
+			<git command="push">
+				<args>
+					<arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
+				</args>
+			</git>
+		</sequential>
+	</target>
+
+	<!--Create new tag in github -->
+	<target name="git_tag" description="Create new github tag">
+		<input message="Comment-message" addproperty="comment-message" />
+		<input message="Tag name" addproperty="tag-name" />
+		<sequential>
+			<git command="tag">
+				<args>
+					<arg value="-a" />
+					<arg value="@{tag-name}" />
+					<arg value="-m @{comment-message}" />
+				</args>
+			</git>
+			<git command="push">
+				<args>
+				    <arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
+					<arg value="--tags" />
+				</args>
+			</git>
+		</sequential>
+	</target>
 
 	<!-- Remove files created by previous build -->
 	<target name="clean" description="Clean up build system results">
@@ -104,12 +141,13 @@
 	<target name="jrun" depends="dist" description="Run the application using jar file">
 		<java jar="${build.jar.dir}/RAM.jar" fork="true" />
 	</target>
-	
-	
+
+
 	<!-- Run salessystem in console -->
 	<target name="runc" depends="build" description="Run the application (console)">
-	<java classname="ee.ut.math.tvt.[team].Intro" classpathref="test.classpath" fork="yes">
-		<arg value="console" />
-	</java>
-</target>
+		<java classname="ee.ut.math.tvt.[team].Intro" classpathref="test.classpath"
+			fork="yes">
+			<arg value="console" />
+		</java>
+	</target>
 </project>
