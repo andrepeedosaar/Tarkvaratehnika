@@ -129,7 +129,11 @@ public class StockAddItemPane extends JPanel{
 			
 			try{
 				StockTableModel stm = new StockTableModel();
-				stm.addItem(null);
+				StockItem si = new StockItem(Long.parseLong(add_id.getText()), 
+											 add_name.getText(), 
+											 Double.parseDouble(add_price.getText()), 
+											 Integer.parseInt(add_quantity.getText()));
+				stm.addItem(si);
 				
 				log.info("Item added to stock");
 				Window win = SwingUtilities.getWindowAncestor(accept);
