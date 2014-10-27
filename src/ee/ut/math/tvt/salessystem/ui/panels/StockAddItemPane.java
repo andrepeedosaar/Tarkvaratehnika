@@ -6,7 +6,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -123,26 +122,26 @@ public class StockAddItemPane extends JPanel {
 		try {
 			// Get item id, make sure that id is not in use
 			long id = Long.parseLong(add_id.getText());
-			if(id<0)
-				id=-id;
-				
-			//Get item name
+			if (id < 0)
+				id = -id;
+
+			// Get item name
 			String name = add_name.getText();
-			
-			//Get item price
+
+			// Get item price
 			double price = Double.parseDouble(add_price.getText());
-			if (price<0)
+			if (price < 0)
 				price = -price;
-			
-			//Get item quantity
+
+			// Get item quantity
 			int quantity = Integer.parseInt(add_quantity.getText());
-			if(quantity<0)
+			if (quantity < 0)
 				quantity = -quantity;
-			
+
 			si = new StockItem(id, name, price, quantity);
-			
+
 		} catch (NumberFormatException e) {
-			
+			log.info("Invalid input");
 		}
 
 		if (si != null) {
