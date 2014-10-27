@@ -1,8 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
-import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.panels.ConfirmOrderPane;
 import ee.ut.math.tvt.salessystem.ui.panels.StockAddItemPane;
 
 import java.awt.Color;

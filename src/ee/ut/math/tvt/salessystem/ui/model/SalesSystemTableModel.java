@@ -69,7 +69,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 			if (item.getName() == name)
 				return item;
 		}
-		throw new NoSuchElementException();
+		return null;
 	}
 
 	public List<T> getTableRows() {

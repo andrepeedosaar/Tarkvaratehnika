@@ -1,7 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
@@ -42,17 +41,20 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * @param stockItem
 	 */
 	public void addItem(final StockItem stockItem) {
-		try {
-			StockItem item = getItemById(stockItem.getId());
+		StockItem item = getItemById(stockItem.getId());
+		
+		if(item != null){
 			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
 			log.debug("Found existing item " + stockItem.getName()
 					+ " increased quantity by " + stockItem.getQuantity());
-		} catch (NoSuchElementException e) {
+		}
+		else{
 			rows.add(stockItem);
 			log.debug("Added " + stockItem.getName() + " quantity of "
 					+ stockItem.getQuantity());
 		}
 		fireTableDataChanged();
+		
 	}
 
 	@Override
