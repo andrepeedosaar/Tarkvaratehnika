@@ -16,20 +16,19 @@ import javax.persistence.Table;
 public class StockItem implements Cloneable, DisplayableItem {
 	
 	@Id
-	@Column(name = "STOCK_ID", nullable = false)
-    @GeneratedValue
+	@Column(name = "ID", nullable = false)
     private Long id;
 	
-	@Column
+	@Column(name = "NAME")
     private String name;
 
-	@Column
+	@Column(name = "PRICE")
     private double price;
 
-	@Column
+	@Column(name = "DESCRIPTION")
     private String description;
     
-	@Column
+	@Column(name = "QUANTITY")
     private int quantity;
 
     /**

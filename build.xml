@@ -10,6 +10,7 @@
 	<property name="lib.dir" value="${basedir}/lib" />
 
 	<!-- database variables -->
+	<property name="conf.dir" value="${basedir}/conf" />
 	<property name="data.dir" value="${basedir}/data" />
 	<property name="db.file" value="${data.dir}/POSdb" />
 	<property name="db.alias" value="POS" />

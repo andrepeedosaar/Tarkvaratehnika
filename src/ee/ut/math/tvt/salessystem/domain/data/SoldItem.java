@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -20,22 +21,22 @@ import javax.persistence.Table;
 public class SoldItem implements Cloneable, DisplayableItem {
 	
 	@Id
-	@Column(name = "SOLD_ID", nullable = false)
+	@Column(name = "ID", nullable = false)
     private Long id;
     
-	//@ManyToOne
-    //@JoinColumn(name = "LECTURER_ID", nullable = false)
-	//seotud stockitem id-ga
-	@Column(name = "stock_item")
+
+//	@Column(name = "STOCKITEM_ID")
+	@OneToOne
+    @JoinColumn(name = "STOCKITEM_ID", nullable = false)
     private StockItem stockItem;
     
-	@Column(name = "name_")
+	@Column(name = "NAME")
     private String name;
     
-	@Column(name = "quantity_") 
+	@Column(name = "QUANTITY") 
     private Integer quantity;
     
-	@Column(name = "price_")
+	@Column(name = "ITEMPRICE")
     private double price;
     
     public SoldItem(StockItem stockItem, int quantity) {

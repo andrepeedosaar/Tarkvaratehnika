@@ -33,6 +33,8 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	public List<StockItem> loadWarehouseState() {
 		// XXX mock implementation
+		
+		
 		List<StockItem> dataset = new ArrayList<StockItem>();
 
 		StockItem chips = new StockItem(1l, "Lays chips", "Potato chips", 11.0,
