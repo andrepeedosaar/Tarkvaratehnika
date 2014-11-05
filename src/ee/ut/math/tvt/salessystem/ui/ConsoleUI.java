@@ -11,9 +11,9 @@ import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
-
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 /**
  * A simple CLI (limited functionality).
@@ -27,6 +27,10 @@ public class ConsoleUI {
 	private List<StockItem> cart;
 
 	private List<StockItem> warehouse;
+	
+	public void endSession() {
+	    HibernateUtil.closeSession();
+	}
 
 	public ConsoleUI(SalesDomainController domainController) {
 		this.dc = domainController;
@@ -104,14 +108,19 @@ public class ConsoleUI {
 	private void processCommand(String command) {
 		String[] c = command.split(" ");
 
-		if (c[0].equals("h"))
+		if (c[0].equals("h")){
 			printUsage();
-		else if (c[0].equals("q"))
+		}
+		else if (c[0].equals("q")){
+			endSession();
 			System.exit(0);
-		else if (c[0].equals("w"))
+		}
+		else if (c[0].equals("w")){
 			showStock(warehouse);
-		else if (c[0].equals("c"))
+		}
+		else if (c[0].equals("c")){
 			showStock(cart);
+		}
 		else if (c[0].equals("p"))
 			try {
 			    List<SoldItem> soldItems = new ArrayList<SoldItem>();

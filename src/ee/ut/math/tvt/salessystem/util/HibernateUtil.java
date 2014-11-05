@@ -9,7 +9,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
- * Utility class that makes sure we has a single open hibernate session.
+ * Utility class that makes sure we have a single open hibernate session.
  */
 public class HibernateUtil {
 	private static final Logger log = Logger.getLogger(HibernateUtil.class);
@@ -48,5 +48,5 @@ public class HibernateUtil {
 			session.close();
 		session = null;
 	}
-
+	
 }
