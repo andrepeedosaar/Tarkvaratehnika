@@ -84,8 +84,8 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
 		// Initialize combobox
-		barCodeCombo = new JComboBox<String>(model.getWarehouseTableModel()
-				.getAllNames());
+		barCodeCombo = new JComboBox<String>(model.getSalesComboBoxModel());
+		
 
 		// Initialize the textfields
 		quantityField = new JTextField("1");

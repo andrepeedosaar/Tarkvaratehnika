@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import javax.swing.DefaultComboBoxModel;
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
@@ -23,6 +25,9 @@ public class SalesSystemModel {
 	//Model for viewing specific order info on history tab
 	private PurchaseInfoTableModel historyPurchaseTableModel;
 	
+	//Model for combobox
+	private DefaultComboBoxModel<String> salesComboModel;
+	
 	//Controller
 	private final SalesDomainController domainController;
 	
@@ -43,6 +48,10 @@ public class SalesSystemModel {
 		// populate stock model with data from the warehouse
 		warehouseTableModel.populateWithData(domainController
 				.loadWarehouseState());
+		
+		//create and populate combobox model with warehouse stuff
+		salesComboModel = new DefaultComboBoxModel<String>(warehouseTableModel.getAllNames());
+
 
 	}
 
@@ -59,6 +68,10 @@ public class SalesSystemModel {
 
 	public SalesHistoryModel getSalesHistoryModel() {
 		return salesHistoryModel;
+	}
+	
+	public DefaultComboBoxModel<String> getSalesComboBoxModel() {
+		return salesComboModel;
 	}
 
 }
