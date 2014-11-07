@@ -75,10 +75,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 		return rows;
 	}
 
-//	public List<String> getAllNames() {
-//		return names;
-//	}
-	
 	public String[] getAllNames() {
 		return names.toArray(new String[names.size()]);
 	}

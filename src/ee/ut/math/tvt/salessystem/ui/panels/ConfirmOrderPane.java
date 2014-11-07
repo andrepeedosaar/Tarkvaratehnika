@@ -10,14 +10,18 @@ import java.awt.event.FocusListener;
 import javax.swing.*;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import java.awt.Window;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 public class ConfirmOrderPane extends JPanel {
 
@@ -137,18 +141,9 @@ public class ConfirmOrderPane extends JPanel {
 			String tmp = changeLabelVal.getText();
 
 			if (Double.parseDouble(tmp) >= 0) {
-
-				log.info("Sale complete");
-
-				// If sale is successful add it to history
-				model.getSalesHistoryModel().addItem(
-						new SoldHistoryItem(getCurrentDate(), getCurrentTime(),
-								model.getCurrentPurchaseTableModel()
-										.getTableRows()));
-
-				// Subtract the amount from warehouse
-				model.getWarehouseTableModel().subtractStock(
-						model.getCurrentPurchaseTableModel().getTableRows());
+				
+				//Finalize sale - update history + db
+				finalizeSale();
 				
 				// Close frame
 				Window win = SwingUtilities.getWindowAncestor(acceptButton);
@@ -159,6 +154,38 @@ public class ConfirmOrderPane extends JPanel {
 		} catch (NumberFormatException e) {
 			changeLabelVal.setText("Invalid input");
 		}
+	}
+
+	private void finalizeSale() {
+		
+		List<SoldItem> soldItems = model.getCurrentPurchaseTableModel().getTableRows();
+		
+		SoldHistoryItem  historyItem = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
+		
+		StockItem dbItem;
+		
+		//Update database
+		Session session = HibernateUtil.currentSession();
+		session.getTransaction().begin();
+		
+		//Add history item
+		session.persist(historyItem);
+		
+		for(SoldItem el : soldItems){
+			//Add solditems to db
+			session.persist(el);
+			//Change stock quantities
+			dbItem = (StockItem)session.get(StockItem.class, el.getStockItem().getId());
+			dbItem.setQuantity(dbItem.getQuantity()-el.getQuantity());
+		}
+		session.getTransaction().commit();
+		
+		//Update local info
+		// If sale is successful add it to history
+		model.getSalesHistoryModel().addItem(historyItem);
+		
+		log.info("Sale complete");
+		
 	}
 
 	private void calcChange() throws NumberFormatException{
@@ -174,19 +201,16 @@ public class ConfirmOrderPane extends JPanel {
 		}catch (NumberFormatException e) {
 			changeLabelVal.setText("Invalid input");
 		}
-			
-			
-		
 	}
 
 	// Methods for retrieving current date and time
-	public String getCurrentDate() {
+	private String getCurrentDate() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		return sdf.format(date).toString();
 	}
 
-	public String getCurrentTime() {
+	private String getCurrentTime() {
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 		return sdf.format(date).toString();

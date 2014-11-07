@@ -5,36 +5,34 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import ee.ut.math.tvt.salessystem.domain.data.SoldHistoryItem;
 
-
-
 public class SalesHistoryModel extends AbstractTableModel {
 
-    private static final long serialVersionUID = 1L;
-    
-    protected List<SoldHistoryItem> rows;
-    protected final String[] headers;
-    
-    
-	public SalesHistoryModel() {
-        headers = new String[] {"Date", "Time", "Total price"};
-        rows = new ArrayList<SoldHistoryItem>();
-	}
-    
-    public int getColumnCount() {
-        return headers.length;
-    }
+	private static final long serialVersionUID = 1L;
 
-    public int getRowCount() {
-        return rows.size();
-    }
-    public SoldHistoryItem getRow(int rowNumber) {
-        return rows.get(rowNumber);
-    }
-    
-    public Object getValueAt(final int rowIndex, final int columnIndex) {
-        return getColumnValue(rows.get(rowIndex), columnIndex);
-    }
-    
+	protected List<SoldHistoryItem> rows;
+	protected final String[] headers;
+
+	public SalesHistoryModel() {
+		headers = new String[] { "Date", "Time", "Total price" };
+		rows = new ArrayList<SoldHistoryItem>();
+	}
+
+	public int getColumnCount() {
+		return headers.length;
+	}
+
+	public int getRowCount() {
+		return rows.size();
+	}
+
+	public SoldHistoryItem getRow(int rowNumber) {
+		return rows.get(rowNumber);
+	}
+
+	public Object getValueAt(final int rowIndex, final int columnIndex) {
+		return getColumnValue(rows.get(rowIndex), columnIndex);
+	}
+
 	protected Object getColumnValue(SoldHistoryItem item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
@@ -46,17 +44,19 @@ public class SalesHistoryModel extends AbstractTableModel {
 		}
 		throw new IllegalArgumentException("Column index out of range");
 	}
+
 	public void addItem(final SoldHistoryItem histItem) {
 		rows.add(histItem);
 		fireTableDataChanged();
 	}
-	
+
 	public String getColumnName(final int columnIndex) {
-        return headers[columnIndex];
-    }
+		return headers[columnIndex];
+	}
 
+	public void populateWithData(final List<SoldHistoryItem> data) {
+		rows.clear();
+		rows.addAll(data);
+	}
 
-    
-   
-    
 }

@@ -13,8 +13,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 public class StockAddItemPane extends JPanel {
 
@@ -146,8 +149,21 @@ public class StockAddItemPane extends JPanel {
 
 		if (si != null) {
 			// Finalize adding and close window
-			model.getWarehouseTableModel().addItem(si);
+			boolean inTable = model.getWarehouseTableModel().addItem(si);
 			model.getSalesComboBoxModel().addElement(si.getName());
+
+			// Save new item in db
+			Session session = HibernateUtil.currentSession();
+			session.getTransaction().begin();
+			if (!inTable){
+				session.persist(si);
+			}
+			else{
+				StockItem item = (StockItem)session.get(StockItem.class, si.getId());
+				item.setQuantity(item.getQuantity()+si.getQuantity());
+			}	
+			session.getTransaction().commit();
+
 			log.info("Item added to stock");
 
 			Window win = SwingUtilities.getWindowAncestor(accept);

@@ -18,19 +18,19 @@ public class SalesSystemModel {
 
 	// Current shopping cart model
 	private PurchaseInfoTableModel currentPurchaseTableModel;
-	
-	//History model
+
+	// History model
 	private SalesHistoryModel salesHistoryModel;
-	
-	//Model for viewing specific order info on history tab
+
+	// Model for viewing specific order info on history tab
 	private PurchaseInfoTableModel historyPurchaseTableModel;
-	
-	//Model for combobox
+
+	// Model for combobox
 	private DefaultComboBoxModel<String> salesComboModel;
-	
-	//Controller
+
+	// Controller
 	private final SalesDomainController domainController;
-	
+
 	/**
 	 * Construct application model.
 	 * 
@@ -45,14 +45,17 @@ public class SalesSystemModel {
 		historyPurchaseTableModel = new PurchaseInfoTableModel();
 		salesHistoryModel = new SalesHistoryModel();
 
-		// populate stock model with data from the warehouse
+//		// populate stock model with data from the warehouse
 		warehouseTableModel.populateWithData(domainController
 				.loadWarehouseState());
-		
-		//create and populate combobox model with warehouse stuff
-		salesComboModel = new DefaultComboBoxModel<String>(warehouseTableModel.getAllNames());
 
+//		// populate stock model with data from the warehouse
+		salesHistoryModel.populateWithData(domainController
+				.loadSaleHistoryState());
 
+		// create and populate combobox model with warehouse stuff
+		salesComboModel = new DefaultComboBoxModel<String>(
+				warehouseTableModel.getAllNames());
 	}
 
 	public StockTableModel getWarehouseTableModel() {
@@ -62,6 +65,7 @@ public class SalesSystemModel {
 	public PurchaseInfoTableModel getCurrentPurchaseTableModel() {
 		return currentPurchaseTableModel;
 	}
+
 	public PurchaseInfoTableModel getHistoryPurchaseTableModel() {
 		return historyPurchaseTableModel;
 	}
@@ -69,7 +73,7 @@ public class SalesSystemModel {
 	public SalesHistoryModel getSalesHistoryModel() {
 		return salesHistoryModel;
 	}
-	
+
 	public DefaultComboBoxModel<String> getSalesComboBoxModel() {
 		return salesComboModel;
 	}

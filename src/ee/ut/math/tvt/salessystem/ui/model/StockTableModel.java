@@ -1,10 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
-
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 /**
@@ -40,21 +36,21 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * 
 	 * @param stockItem
 	 */
-	public void addItem(final StockItem stockItem) {
+	public boolean addItem(final StockItem stockItem) {
 		StockItem item = getItemById(stockItem.getId());
-		
-		if(item != null){
-			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
+
+		if (item != null) {
 			log.debug("Found existing item " + stockItem.getName()
 					+ " increased quantity by " + stockItem.getQuantity());
-		}
-		else{
+			fireTableDataChanged();
+			return true;
+		} else {
 			rows.add(stockItem);
 			log.debug("Added " + stockItem.getName() + " quantity of "
 					+ stockItem.getQuantity());
+			fireTableDataChanged();
+			return false;
 		}
-		fireTableDataChanged();
-		
 	}
 
 	@Override
@@ -74,20 +70,5 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 
 		return buffer.toString();
-	}
-
-	/**
-	 * 
-	 * Reduce stock item quantity using a given list of sold items
-	 * 
-	 * @param soldItems
-	 */
-	public void subtractStock(List<SoldItem> soldItems) {
-		StockItem item;
-		for (SoldItem el : soldItems) {
-			item = getItemById(el.getId());
-			item.setQuantity(item.getQuantity() - el.getQuantity());
-		}
-		fireTableDataChanged();
 	}
 }
