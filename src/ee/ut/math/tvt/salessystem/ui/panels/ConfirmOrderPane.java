@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.*;
 
@@ -114,8 +116,10 @@ public class ConfirmOrderPane extends JPanel {
 			}
 		});
 
-		payAmountField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		payAmountField.addFocusListener(new FocusListener() {
+			public void focusGained(FocusEvent e) {
+			}
+			public void focusLost(FocusEvent e) {
 				calcChange();
 			}
 		});
@@ -131,10 +135,7 @@ public class ConfirmOrderPane extends JPanel {
 	protected void acceptSaleEventHandler() {
 		try {
 			String tmp = changeLabelVal.getText();
-			if (tmp.length() == 0) {
-				calcChange();
-				tmp = changeLabelVal.getText();
-			}
+
 			if (Double.parseDouble(tmp) >= 0) {
 
 				log.info("Sale complete");
