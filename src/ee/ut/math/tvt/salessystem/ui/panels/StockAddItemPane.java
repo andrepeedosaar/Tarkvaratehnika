@@ -147,6 +147,7 @@ public class StockAddItemPane extends JPanel {
 		if (si != null) {
 			// Finalize adding and close window
 			model.getWarehouseTableModel().addItem(si);
+			model.getSalesComboBoxModel().addElement(si.getName());
 			log.info("Item added to stock");
 
 			Window win = SwingUtilities.getWindowAncestor(accept);
