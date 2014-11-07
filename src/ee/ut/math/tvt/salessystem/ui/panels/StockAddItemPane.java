@@ -152,7 +152,7 @@ public class StockAddItemPane extends JPanel {
 			boolean inTable = model.getWarehouseTableModel().addItem(si);
 			model.getSalesComboBoxModel().addElement(si.getName());
 
-			// Save new item in db
+			// Save new stockitem in db or increase quantity
 			Session session = HibernateUtil.currentSession();
 			session.getTransaction().begin();
 			if (!inTable){
