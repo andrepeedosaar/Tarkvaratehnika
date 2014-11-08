@@ -85,17 +85,13 @@ public class ConfirmOrderPane extends JPanel {
 	}
 
 	private void initComp() {
-		// Get total sum
-		int sum = 0;
-		for (SoldItem el : model.getCurrentPurchaseTableModel().getTableRows())
-			sum += el.getSum();
 
 		// Init labels
 		orderSumLabelTxt = new JLabel("Total order sum: ");
 		payAmountLabel = new JLabel("Payment amount:");
 		changeLabelTxt = new JLabel("Change amount: ");
 
-		orderSumLabelVal = new JLabel(String.valueOf(sum));
+		orderSumLabelVal = new JLabel(String.valueOf(model.getCurrentPurchaseTableModel().getOrderTotal()));
 		changeLabelVal = new JLabel();
 
 		// Init field
@@ -129,18 +125,16 @@ public class ConfirmOrderPane extends JPanel {
 		});
 	}
 
-	protected void cancelSaleEventHandler() {
+	private void cancelSaleEventHandler() {
 		log.info("Sale cancelled!");
 		// Close frame
 		Window win = SwingUtilities.getWindowAncestor(cancelButton);
 		win.setVisible(false);
 	}
 
-	protected void acceptSaleEventHandler() {
+	private void acceptSaleEventHandler() {
 		try {
-			String tmp = changeLabelVal.getText();
-
-			if (Double.parseDouble(tmp) >= 0) {
+			if (Double.parseDouble(changeLabelVal.getText()) >= 0) {
 				
 				//Finalize sale - update history + db
 				finalizeSale();

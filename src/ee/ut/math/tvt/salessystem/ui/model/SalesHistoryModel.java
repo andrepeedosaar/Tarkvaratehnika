@@ -9,8 +9,8 @@ public class SalesHistoryModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 
-	protected List<SoldHistoryItem> rows;
-	protected final String[] headers;
+	private List<SoldHistoryItem> rows;
+	private final String[] headers;
 
 	public SalesHistoryModel() {
 		headers = new String[] { "Date", "Time", "Total price" };

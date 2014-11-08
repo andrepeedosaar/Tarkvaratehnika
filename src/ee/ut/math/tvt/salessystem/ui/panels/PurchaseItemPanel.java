@@ -149,8 +149,7 @@ public class PurchaseItemPanel extends JPanel {
 		}
 	}
 
-	// Search the warehouse for a StockItem with the bar code entered
-	// to the barCode textfield.
+
 	private StockItem getStockItemByName() {
 		try {
 
