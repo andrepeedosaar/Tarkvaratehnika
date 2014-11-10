@@ -52,9 +52,8 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 	public Object getValueAt(final int rowIndex, final int columnIndex) {
 		return getColumnValue(rows.get(rowIndex), columnIndex);
 	}
-
+	
 	// search for item with the specified id
-
 	public T getItemById(final long id) {
 		for (final T item : rows) {
 			if (item.getId() == id)

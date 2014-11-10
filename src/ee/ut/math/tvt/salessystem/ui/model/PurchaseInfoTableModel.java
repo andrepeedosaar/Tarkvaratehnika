@@ -56,14 +56,14 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	}
 
 	/**
-	 * Add new StockItem to table.
+	 * Add new SoldItem to table.
 	 */
 	public void addItem(final SoldItem item) {
 		/**
 		 * XXX In case such stockItem already exists increase the quantity of
 		 * the existing stock.
 		 */
-		SoldItem onListItem = getItemById(item.getId());
+		SoldItem onListItem = getItemByStockId(item.getStockItem().getId());
 		if (onListItem != null)
 			onListItem.setQuantity(item.getQuantity());
 
@@ -78,5 +78,13 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		for (SoldItem el : rows)
 			sum += el.getSum();
 		return sum;
+	}
+	
+	public SoldItem getItemByStockId(final long id) {
+		for (final SoldItem item : rows) {
+			if (item.getStockItem().getId() == id)
+				return item;
+		}
+		return null;
 	}
 }

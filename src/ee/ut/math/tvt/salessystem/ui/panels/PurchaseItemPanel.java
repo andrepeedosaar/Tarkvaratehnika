@@ -181,7 +181,7 @@ public class PurchaseItemPanel extends JPanel {
 			//If item is already in the purchase list, take that
 			//quantity into account as well
 			SoldItem onListItem = model.getCurrentPurchaseTableModel()
-					.getItemById(stockItem.getId());
+					.getItemByStockId(stockItem.getId());
 			if(onListItem!=null)
 				quantity+=onListItem.getQuantity();
 			
