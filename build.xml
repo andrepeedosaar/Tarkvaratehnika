@@ -1,192 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." name="POS" default="build">
+<project basedir="." name="templateApp" default="build">
+    
+    <!-- Definitions of variables used during the rest of this script -->
+    
+    <property file="build.properties"/>
+    <property name="build.dir"           value="${basedir}/build"/>
+    <property name="src.dir"             value="${basedir}/src" />
+    <property name="conf.dir"            value="${basedir}/conf" />
+    <property name="lib.dir"             value="${basedir}/lib"/>
+    <property name="lib.hibernate.dir"   value="${lib.dir}/hibernate"/>
+    
+    <property name="build.classes.dir"   value="${build.dir}/classes" />
+    <property name="dist.dir"            value="${build.dir}/dist" />
+    <property name="doc.dir"             value="${build.dir}/javadoc"/>
+    <property name="test.reports.dir"    value="${build.dir}/reports/"/>
 
-	<!-- build/run variables -->
-	<property name="build.dir" value="${basedir}/build" />
-	<property name="build.classes.dir" value="${build.dir}/classes/" />
-	<property name="src.dir" value="${basedir}/src" />
-	<property name="build.jar.dir" value="${build.dir}/jar" />
-	<property name="resource.dir" value="${basedir}/resources" />
-	<property name="lib.dir" value="${basedir}/lib" />
+    <!-- database variables -->
+    <property name="data.dir"            value="${basedir}/data"/>
+    <property name="db.file"             value="${data.dir}/POSdb"/>
+    <property name="db.alias"            value="POS"/>
+    <property name="db.url"              value="jdbc:hsqldb:hsql://localhost/POS"/>
+    
+    
+    <!-- Definitions of classpath variants used for different tasks -->
+    
+    <path id="compile.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        
+        <fileset dir="${lib.hibernate.dir}">
+             <include name="*.jar"/>
+         </fileset>
+    </path>
+    
+    <path id="run.classpath">
+        <pathelement location="${build.classes.dir}"/>
+        <!-- configuration -->
+        <pathelement location="${conf.dir}"/>
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+            
+        <fileset dir="${lib.hibernate.dir}">
+             <include name="*.jar"/>
+         </fileset>
+    </path>
+            
+    
+    
+    <!-- Definitions of runnable ant targets.
+         Run them from the command line by executing "ant [targetname]"  -->    
+    
+    <target name="run" depends="build" description="Run the template application">
+        <java
+            classname="ee.ut.math.tvt.salessystem.SalesSystem"
+            classpathref="run.classpath"
+            fork="yes"
+        />
+    </target>
+    
+    <target name="runc" depends="build" description="Run the template application (console)">
+            <java
+                classname="ee.ut.math.tvt.salessystem.SalesSystem"
+                classpathref="run.classpath"
+                fork="yes">
+                <arg value="console" />
+            </java>
+        </target>
 
-	<!-- database variables -->
-	<property name="conf.dir" value="${basedir}/conf" />
-	<property name="data.dir" value="${basedir}/data" />
-	<property name="db.file" value="${data.dir}/POSdb" />
-	<property name="db.alias" value="POS" />
-	<property name="db.url" value="jdbc:hsqldb:hsql://localhost/POS" />
-	<property name="lib.hibernate.dir" value="${lib.dir}/hibernate" />
+    <target name="build" description="Build the system">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <javac
+            srcdir="${src.dir}"
+            destdir="${build.classes.dir}"
+            debug="true"
+            debuglevel="lines,vars,source"
+            encoding="utf-8"
+            compiler="modern"
+            target="1.5"
+            source="1.5"
+        >
+            <classpath refid="compile.classpath"/>
+            <compilerarg value="-Xlint:unchecked" />
+            <compilerarg value="-Xlint:deprecation" />
+        </javac>
+        
+    </target>
 
-	<!-- Classpath definitions -->
-	<path id="compile.classpath">
-		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-		</fileset>
+    <target name="dist" depends="build" description="Build distribution unit"> 
+        <mkdir dir="${dist.dir}"/>
+        <!-- copy libraries to dist -->
+        <!-- TODO : also copy the lib/hibernate libs !! --> 
+        <copy todir="${dist.dir}">
+            <fileset dir="." includes="${lib.dir}/*.jar"/>
+            <fileset file="${conf.dir}/log4j.xml" />
+        </copy>
+        <jar destfile="${dist.dir}/${ant.project.name}.jar">
+            <fileset dir="${build.classes.dir}"/>
+            <manifest>
+                <attribute name="Main-Class" value="ee.ut.math.tvt.salessystem.SalesSystem"/>
+                <attribute name="Class-Path" value=". lib/log4j-1.2.11.jar lib/looks-2.0.4.jar lib/xerces.jar"/>
+            </manifest>
+        </jar>
+    </target>
 
-		<fileset dir="${lib.hibernate.dir}">
-			<include name="*.jar" />
-		</fileset>
-	</path>
+    <!-- Build internal documentation -->
+    <target name="javadoc" description="Build internal documentation">
+        <mkdir dir="${doc.dir}"/>
+        <javadoc destdir="${doc.dir}"
+                classpathref="compile.classpath"
+        >
+            <fileset dir="${src.dir}" includes="**/*.java"/>
+        </javadoc>
+    </target>
 
-	<path id="run.classpath">
-		<pathelement location="${build.classes.dir}" />
-		<!-- configuration -->
-		<pathelement location="${conf.dir}" />
-		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-		</fileset>
+    <!-- Clean up build system results -->
+    <target name="clean" description="Clean up build system results">
+        <delete dir="${build.dir}"/>
+    </target>
 
-		<fileset dir="${lib.hibernate.dir}">
-			<include name="*.jar" />
-		</fileset>
-	</path>
+    
+    <target name="dbmanager" description="Start the HSQLDB manager">
+        <java
+            classname="org.hsqldb.util.DatabaseManagerSwing"
+            classpathref="run.classpath"
+            fork="yes"
+        >
+            <arg line="--user sa --url ${db.url}" />
+        </java>
+    </target>
 
-
-	<!--Git task/macro used for different git commands -->
-	<macrodef name="git">
-		<attribute name="command" />
-		<attribute name="dir" default="" />
-		<element name="args" optional="true" />
-		<sequential>
-			<echo message="git @{command}" />
-			<exec executable="git" dir="@{dir}">
-				<arg value="@{command}" />
-				<args />
-			</exec>
-		</sequential>
-	</macrodef>
-
-	<!-- Runnable definitions -->
-	
-	<!-- Manage database -->
-	<target name="dbmanager" description="Start the HSQLDB manager">
-		<java classname="org.hsqldb.util.DatabaseManagerSwing"
-			classpathref="run.classpath" fork="yes">
-			<arg line="--user sa --url ${db.url}" />
-		</java>
-	</target>
-	
-	<!-- Start database -->
-	<target name="startdb" description="Start the HSQLDB with the default params">
-		<java classname="org.hsqldb.Server" classpathref="run.classpath"
-			fork="yes">
-			<arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" />
-		</java>
-	</target>
-
-
-	<!--Commit changes to github -->
-	<target name="git_commit" description="Commit to local repo and push changes">
-		<input message="Commit message" addproperty="message" />
-		<git command="add">
-			<args>
-				<arg value="-A" />
-			</args>
-		</git>
-		<git command="commit">
-			<args>
-				<arg value="-m ${message}" />
-			</args>
-		</git>
-		<git command="push">
-			<args>
-				<arg value="https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
-			</args>
-		</git>
-
-	</target>
-
-	<!--Create new tag in github -->
-	<target name="git_tag" description="Create new github tag">
-		<input message="Comment-message" addproperty="message" />
-		<input message="Tag name" addproperty="tag-name" />
-
-		<git command="tag">
-			<args>
-				<arg value="-a" />
-				<arg value="${tag-name}" />
-				<arg value="-m ${message}" />
-			</args>
-		</git>
-		<git command="push">
-			<args>
-				<arg value="--tags https://github.com/andrepeedosaar/Tarkvaratehnika.git" />
-			</args>
-		</git>
-
-	</target>
-
-	<!-- Remove files created by previous build -->
-	<target name="clean" description="Clean up build system results">
-		<delete dir="${build.dir}" />
-	</target>
-
-	<!-- Executes application via class Intro -->
-	<target name="run" depends="build" description="Run the application">
-		<java classname="ee.ut.math.tvt.RAM.Intro" classpathref="run.classpath"
-			fork="yes">
-			<jvmarg value="-Xdebug" />
-			<jvmarg
-				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
-		</java>
-	</target>
-
-	<!-- Compile the source code and set files in the right places -->
-	<target name="build" description="Build the system">
-		<mkdir dir="${build.dir}" />
-		<mkdir dir="${build.classes.dir}" />
-		<javac srcdir="${src.dir}" destdir="${build.classes.dir}" debug="true"
-			debuglevel="lines,vars,source" encoding="utf-8" compiler="modern"
-			includeantruntime="false">
-			<classpath refid="compile.classpath" />
-		</javac>
-		<copy todir="${build.classes.dir}">
-			<fileset dir="${resource.dir}">
-				<include name="**" />
-			</fileset>
-		</copy>
-	</target>
-
-	<!-- Create a jar file in build/jar folder -->
-	<target name="dist" depends="build" description="Create a jar file">
-
-		<!-- Update version.properties -->
-		<propertyfile file="${resource.dir}/version.properties">
-			<entry key="build.revision.number" type="int" operation="+"
-				value="1" />
-		</propertyfile>
-
-		<property file="${resource.dir}/version.properties">
-		</property>
-
-		<propertyfile file="${resource.dir}/version.properties">
-			<entry key="build.number"
-				value="${build.major.number}.${build.minor.number}.${build.revision.number}" />
-		</propertyfile>
-
-		<!-- Create jar -->
-		<mkdir dir="${build.jar.dir}" />
-		<jar destfile="${build.jar.dir}\RAM.jar" basedir="${build.dir}/classes">
-			<zipgroupfileset includes="*.jar" dir="${basedir}/lib" />
-			<manifest>
-				<attribute name="Main-Class" value="ee/ut/math/tvt/RAM/Intro" />
-			</manifest>
-		</jar>
-
-
-	</target>
-
-	<!-- Run the created jar file -->
-	<target name="jrun" depends="dist" description="Run the application using jar file">
-		<java jar="${build.jar.dir}/RAM.jar" fork="true" />
-	</target>
-
-
-	<!-- Run salessystem in console -->
-	<target name="runc" depends="build" description="Run the application (console)">
-		<java classname="ee.ut.math.tvt.[team].Intro" classpathref="run.classpath"
-			fork="yes">
-			<arg value="console" />
-		</java>
-	</target>
+    <target name="startdb" description="Start the HSQLDB with the default params">
+        <java
+            classname="org.hsqldb.Server"
+            classpathref="run.classpath"
+            fork="yes"
+        >
+            <arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" /> 
+        </java>
+    </target>
+    
 </project>
+

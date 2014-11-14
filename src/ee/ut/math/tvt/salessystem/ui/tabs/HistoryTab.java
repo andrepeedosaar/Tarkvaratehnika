@@ -1,20 +1,19 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.Sale;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.JTableHeader;
 
-import ee.ut.math.tvt.salessystem.domain.data.SoldHistoryItem;
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
  * Encapsulates everything that has to do with the purchase tab (the tab
@@ -22,83 +21,97 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
  */
 public class HistoryTab {
 
-	private SalesSystemModel model;
-	
-	//JTables
-	JTable histTable;
-	JTable orderTable;
-	
-	//ScrollPanes
-	JScrollPane histScrollPane;
-	JScrollPane orderScrollPane;
+    private SalesSystemModel model;
 
-	public HistoryTab(SalesSystemModel model) {
-		this.model = model;
-	}
+    private PurchaseInfoTableModel historyDetailsTableModel;
 
-	public Component draw() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new GridBagLayout());
+    public HistoryTab(SalesSystemModel model) {
+        this.model = model;
+    }
 
-		// Create new history table add it to panel
-		createHistTable();
+    /**
+     * The main entry-point method. Creates the tab.
+     */
+    public Component draw() {
+        JPanel panel = new JPanel();
 
+        GridBagConstraints gc = getGbConstraints();
+        GridBagLayout gb = new GridBagLayout();
 
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.fill = GridBagConstraints.BOTH;
-		gc.weightx = 1.0;
-		gc.weighty = 0.7;
+        panel.setLayout(gb);
+        panel.add(drawHistoryGeneralTable(), gc);
+        panel.add(drawHistoryDetailsTable(), gc);
 
-		panel.add(histScrollPane, gc);
-		
-		//Create new table for viewing specific orders
-		createSpecificOrderTable();
-		gc.gridy=1;
-		panel.add(orderScrollPane, gc);
-
-		return panel;
-	}
-
-	//Initialize history table & scrollpanes
-	private void createHistTable() {
-		histTable = new JTable(model.getSalesHistoryModel());
+        return panel;
+    }
 
 
-		JTableHeader header = histTable.getTableHeader();
-		header.setReorderingAllowed(false);
-		
-		// Add table listener. Shows order details if specific row is selected
-				histTable.getSelectionModel().addListSelectionListener(
-						new ListSelectionListener() {
-							public void valueChanged(ListSelectionEvent event) {
 
-								int selectedRow = histTable.getSelectedRow();
-								if(selectedRow!=-1)
-									showOrder(model.getSalesHistoryModel().getRow(selectedRow));
-							}
-						});
-		
-		histScrollPane = new JScrollPane(histTable);
-	}
-	
-	//Initialize order table & scrollpanes
-	private void createSpecificOrderTable(){
-		
-		orderTable = new JTable(model.getHistoryPurchaseTableModel());
-		JTableHeader header = orderTable.getTableHeader();
-		header.setReorderingAllowed(false);
+    private Component drawHistoryGeneralTable() {
 
-		orderScrollPane = new JScrollPane(orderTable);
-		orderScrollPane.setVisible(false);
-		orderScrollPane.setBorder(BorderFactory.createTitledBorder("Order details"));
-		
-	}
+        JTable table = new JTable(model.getPurchaseHistoryTableModel());
+        table.getTableHeader().setReorderingAllowed(false);
+        JScrollPane scrollPane = new JScrollPane(table);
 
-	private void showOrder(SoldHistoryItem item) {
-		model.getHistoryPurchaseTableModel().clear();
-		if(!orderScrollPane.isVisible())
-			orderScrollPane.setVisible(true);
-		for(SoldItem el : item.getSoldItems())
-			model.getHistoryPurchaseTableModel().addItem(el);
-	}
+        ListSelectionModel rowSM = table.getSelectionModel();
+
+        rowSM.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+
+                // Ignore extra messages.
+                if (e.getValueIsAdjusting()) return;
+
+                ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+                if (!lsm.isSelectionEmpty()) {
+                    int selectedRow = lsm.getMinSelectionIndex();
+                    Sale sale = model.getPurchaseHistoryTableModel().getRow(selectedRow);
+                    historyDetailsTableModel.showSale(sale);
+                }
+            }
+        });
+
+        // Wrap it inside a panel
+        JPanel panel = createWrapperPanel("Sales history");
+        panel.add(scrollPane, getGbConstraints());
+
+        return panel;
+    }
+
+
+    private Component drawHistoryDetailsTable() {
+
+        // Create the table
+        historyDetailsTableModel = PurchaseInfoTableModel.getEmptyTable();
+        JTable table = new JTable(historyDetailsTableModel);
+        table.getTableHeader().setReorderingAllowed(false);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        // Wrap it inside a panel
+        JPanel panel = createWrapperPanel("Details of the selected sale");
+        panel.add(scrollPane, getGbConstraints());
+
+        return panel;
+    }
+
+
+    private JPanel createWrapperPanel(String title) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        panel.setBorder(BorderFactory.createTitledBorder(title));
+
+        return panel;
+    }
+
+
+    private GridBagConstraints getGbConstraints() {
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.fill = GridBagConstraints.BOTH;
+        gc.gridwidth = GridBagConstraints.REMAINDER;
+        gc.weightx = 1.0;
+        gc.weighty = 1.0;
+        return gc;
+    }
+
 }
+

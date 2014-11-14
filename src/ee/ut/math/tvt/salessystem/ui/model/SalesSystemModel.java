@@ -1,81 +1,80 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
-import javax.swing.DefaultComboBoxModel;
-
-import org.apache.log4j.Logger;
-
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.Client;
+import ee.ut.math.tvt.salessystem.domain.data.Sale;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import java.util.List;
 
 /**
  * Main model. Holds all the other models.
  */
 public class SalesSystemModel {
 
-	private static final Logger log = Logger.getLogger(SalesSystemModel.class);
+    // Warehouse model
+    private StockTableModel warehouseTableModel;
 
-	// Warehouse model
-	private StockTableModel warehouseTableModel;
+    // Current shopping cart model
+    private PurchaseInfoTableModel currentPurchaseTableModel;
 
-	// Current shopping cart model
-	private PurchaseInfoTableModel currentPurchaseTableModel;
+    // Puchase history model
+    private PurchaseHistoryTableModel purchaseHistoryTableModel;
 
-	// History model
-	private SalesHistoryModel salesHistoryModel;
+    private ClientTableModel clientTableModel;
 
-	// Model for viewing specific order info on history tab
-	private PurchaseInfoTableModel historyPurchaseTableModel;
+    private Client selectedClient;
 
-	// Model for combobox
-	private DefaultComboBoxModel<String> salesComboModel;
+    /**
+     * Construct application model.
+     * @param domainController Sales domain controller.
+     */
+    public SalesSystemModel(SalesDomainController domainController) {
 
-	// Controller
-	private final SalesDomainController domainController;
+        warehouseTableModel = new StockTableModel();
+        currentPurchaseTableModel = new PurchaseInfoTableModel(this);
+        purchaseHistoryTableModel = new PurchaseHistoryTableModel();
+        clientTableModel = new ClientTableModel();
 
-	/**
-	 * Construct application model.
-	 * 
-	 * @param domainController
-	 *            Sales domain controller.
-	 */
-	public SalesSystemModel(SalesDomainController domainController) {
-		this.domainController = domainController;
+        // Load data from the database
 
-		warehouseTableModel = new StockTableModel();
-		currentPurchaseTableModel = new PurchaseInfoTableModel();
-		historyPurchaseTableModel = new PurchaseInfoTableModel();
-		salesHistoryModel = new SalesHistoryModel();
+        List<StockItem> stockItems = domainController.getAllStockItems();
+        warehouseTableModel.populateWithData(stockItems);
 
-//		// populate stock model with data from the warehouse
-		warehouseTableModel.populateWithData(domainController
-				.loadWarehouseState());
+        List<Client> clients = domainController.getAllClients();
+        clientTableModel.populateWithData(clients);
 
-//		// populate stock model with data from the warehouse
-		salesHistoryModel.populateWithData(domainController
-				.loadSaleHistoryState());
+        List<Sale> sales = domainController.getAllSales();
+        purchaseHistoryTableModel.populateWithData(sales);
 
-		// create and populate combobox model with warehouse stuff
-		salesComboModel = new DefaultComboBoxModel<String>(
-				warehouseTableModel.getAllNames());
-	}
+    }
 
-	public StockTableModel getWarehouseTableModel() {
-		return warehouseTableModel;
-	}
+    public StockTableModel getWarehouseTableModel() {
+        return warehouseTableModel;
+    }
 
-	public PurchaseInfoTableModel getCurrentPurchaseTableModel() {
-		return currentPurchaseTableModel;
-	}
+    public PurchaseInfoTableModel getCurrentPurchaseTableModel() {
+        return currentPurchaseTableModel;
+    }
 
-	public PurchaseInfoTableModel getHistoryPurchaseTableModel() {
-		return historyPurchaseTableModel;
-	}
+    public PurchaseHistoryTableModel getPurchaseHistoryTableModel() {
+        return purchaseHistoryTableModel;
+    }
 
-	public SalesHistoryModel getSalesHistoryModel() {
-		return salesHistoryModel;
-	}
+    public ClientTableModel getClientTableModel() {
+        return clientTableModel;
+    }
 
-	public DefaultComboBoxModel<String> getSalesComboBoxModel() {
-		return salesComboModel;
-	}
+    public void setPurchaseHistoryTableModel(
+            PurchaseHistoryTableModel purchaseHistoryTableModel) {
+        this.purchaseHistoryTableModel = purchaseHistoryTableModel;
+    }
+
+    public Client getSelectedClient() {
+        return selectedClient;
+    }
+
+    public void setSelectedClient(Client client) {
+        this.selectedClient = client;
+    }
 
 }

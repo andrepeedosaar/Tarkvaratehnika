@@ -4,28 +4,20 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
- * Utility class that makes sure we have a single open hibernate session.
+ * Utility class that makes sure we has a single open hibernate session.
  */
 public class HibernateUtil {
 	private static final Logger log = Logger.getLogger(HibernateUtil.class);
 
-	private static ServiceRegistry serviceRegistry;
 	public static final SessionFactory sessionFactory;
 
 	static {
 		try {
 			// Create the SessionFactory from hibernate.cfg.xml
-			Configuration configuration = new Configuration();
-			configuration.configure();
-
-			serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
-			sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-
+			sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 		} catch (Throwable ex) {
 			// Make sure you log the exception, as it might be swallowed
 			log.error("Initial SessionFactory creation failed.", ex);
@@ -48,5 +40,5 @@ public class HibernateUtil {
 			session.close();
 		session = null;
 	}
-	
+
 }

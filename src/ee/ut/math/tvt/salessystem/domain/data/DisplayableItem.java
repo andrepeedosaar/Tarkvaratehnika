@@ -8,5 +8,4 @@ public interface DisplayableItem {
 	 * Id of entity.
 	 */
 	public Long getId();
-	public String getName();
 }
