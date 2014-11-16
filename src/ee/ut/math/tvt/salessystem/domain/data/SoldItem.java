@@ -23,9 +23,6 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-//	@Column(name = "ID", nullable = false)
-//	private Long id;
-
 	@OneToOne
 	@JoinColumn(name = "STOCKITEM_ID", nullable = false)
 	private StockItem stockItem;
@@ -50,17 +47,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
 		this.stockItem = stockItem;
 		this.name = stockItem.getName();
 		this.price = stockItem.getPrice();
-//		this.id = stockItem.getId();
 		this.quantity = quantity;
 	}
-
-//	public void setSaleid(Long sale_id) {
-//		this.sale_id = sale_id;
-//	}
-//
-//	public Long getSaleid() {
-//		return sale_id;
-//	}
 
 	public void setHistoryitem(SoldHistoryItem historyitem) {
 		this.historyitem = historyitem;
