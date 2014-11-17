@@ -8,6 +8,8 @@
 	<property name="build.jar.dir" value="${build.dir}/jar" />
 	<property name="resource.dir" value="${basedir}/resources" />
 	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="test.dir" value="${basedir}/test" />
+	<property name="build.test.dir" value="${build.dir}/test" />
 
 	<!-- database variables -->
 	<property name="conf.dir" value="${basedir}/conf" />
@@ -57,7 +59,35 @@
 	</macrodef>
 
 	<!-- Runnable definitions -->
-	
+
+
+	<!-- Build tests -->
+	<target name="build-tests" depends="build" description="Build the system">
+		<mkdir dir="${build.test.dir}" />
+		<javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="true"
+			debuglevel="lines,vars,source" encoding="utf-8" compiler="modern"
+			target="1.5" source="1.5" classpathref="libs">
+			<classpath>
+				<pathelement path="${build.classes.dir}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Run tests -->
+	<target name="test" depends="build-tests" description="Run the template application">
+
+		<junit>
+			<classpath refid="test-classpath" />
+
+			<formatter type="brief" usefile="false" />
+			<batchtest>
+				<fileset dir="${build.test.dir}" includes="**/*.class" />
+			</batchtest>
+		</junit>
+
+
+	</target>
+
 	<!-- Manage database -->
 	<target name="dbmanager" description="Start the HSQLDB manager">
 		<java classname="org.hsqldb.util.DatabaseManagerSwing"
@@ -65,7 +95,7 @@
 			<arg line="--user sa --url ${db.url}" />
 		</java>
 	</target>
-	
+
 	<!-- Start database -->
 	<target name="startdb" description="Start the HSQLDB with the default params">
 		<java classname="org.hsqldb.Server" classpathref="run.classpath"

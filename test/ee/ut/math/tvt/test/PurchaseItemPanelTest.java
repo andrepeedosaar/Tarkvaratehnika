@@ -8,7 +8,7 @@ import org.junit.Test;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
-public class testPurchaseItemPanel {
+public class PurchaseItemPanelTest {
 	
 	private StockItem item;
 	

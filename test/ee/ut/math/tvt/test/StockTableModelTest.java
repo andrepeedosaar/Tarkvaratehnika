@@ -8,7 +8,7 @@ import org.junit.Test;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
-public class testStockTableModel {
+public class StockTableModelTest {
 	
 	StockItem item;
 	
