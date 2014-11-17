@@ -1,11 +1,13 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.Sale;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,10 +24,12 @@ import javax.swing.event.ListSelectionListener;
 public class HistoryTab {
 
     private SalesSystemModel model;
+    private final SalesDomainController controller;
 
     private PurchaseInfoTableModel historyDetailsTableModel;
 
-    public HistoryTab(SalesSystemModel model) {
+    public HistoryTab(SalesSystemModel model, SalesDomainController controller) {
+    	this.controller = controller;
         this.model = model;
     }
 
@@ -65,7 +69,7 @@ public class HistoryTab {
                 if (!lsm.isSelectionEmpty()) {
                     int selectedRow = lsm.getMinSelectionIndex();
                     Sale sale = model.getPurchaseHistoryTableModel().getRow(selectedRow);
-                    historyDetailsTableModel.showSale(sale);
+                    historyDetailsTableModel.setSale(sale);
                 }
             }
         });
@@ -81,7 +85,7 @@ public class HistoryTab {
     private Component drawHistoryDetailsTable() {
 
         // Create the table
-        historyDetailsTableModel = PurchaseInfoTableModel.getEmptyTable();
+        historyDetailsTableModel = new PurchaseInfoTableModel();
         JTable table = new JTable(historyDetailsTableModel);
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -113,5 +117,8 @@ public class HistoryTab {
         return gc;
     }
 
+	public void refresh() {
+		model.getPurchaseHistoryTableModel().populateWithData(controller.getAllSales());
+	}
 }
 

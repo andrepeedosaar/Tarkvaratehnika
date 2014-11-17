@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -43,13 +46,12 @@ public class SalesSystemUI extends JFrame {
   public SalesSystemUI(SalesDomainController domainController) {
       this.domainController = domainController;
     this.model = new SalesSystemModel(domainController);
-    domainController.setModel(model);
 
     // Create singleton instances of the tab classes
-    historyTab = new HistoryTab(model);
+    historyTab = new HistoryTab(model, domainController);
     stockTab = new StockTab(model, domainController);
     purchaseTab = new PurchaseTab(domainController, model, this);
-    clientTab = new ClientTab(model);
+    clientTab = new ClientTab(model, domainController);
 
     setTitle("Sales system");
 
@@ -80,12 +82,30 @@ public class SalesSystemUI extends JFrame {
   }
 
   private void drawWidgets() {
-    JTabbedPane tabbedPane = new JTabbedPane();
+    final JTabbedPane tabbedPane = new JTabbedPane();
 
     tabbedPane.add("Point-of-sale", purchaseTab.draw());
     tabbedPane.add("Warehouse", stockTab.draw());
     tabbedPane.add("History", historyTab.draw());
     tabbedPane.add("Clients", clientTab.draw());
+    
+    tabbedPane.addChangeListener(new ChangeListener() {
+        public void stateChanged(ChangeEvent e) {
+        	switch (tabbedPane.getSelectedIndex()){
+        		case 1:
+        			stockTab.refresh();
+        			break;
+        		case 2:
+        			historyTab.refresh();
+        			break;
+        		case 3:
+        			clientTab.refresh();
+        			break;
+        		default:
+        			break;
+        	}
+        }
+    });
 
     getContentPane().add(tabbedPane);
   }

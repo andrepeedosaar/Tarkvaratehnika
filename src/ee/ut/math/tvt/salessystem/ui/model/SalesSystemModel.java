@@ -22,8 +22,6 @@ public class SalesSystemModel {
 
     private ClientTableModel clientTableModel;
 
-    private Client selectedClient;
-
     /**
      * Construct application model.
      * @param domainController Sales domain controller.
@@ -62,19 +60,6 @@ public class SalesSystemModel {
 
     public ClientTableModel getClientTableModel() {
         return clientTableModel;
-    }
-
-    public void setPurchaseHistoryTableModel(
-            PurchaseHistoryTableModel purchaseHistoryTableModel) {
-        this.purchaseHistoryTableModel = purchaseHistoryTableModel;
-    }
-
-    public Client getSelectedClient() {
-        return selectedClient;
-    }
-
-    public void setSelectedClient(Client client) {
-        this.selectedClient = client;
     }
 
 }
