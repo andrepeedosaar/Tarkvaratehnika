@@ -3,6 +3,8 @@ package ee.ut.math.tvt.salessystem.ui.model;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.SaleSystemException;
 
 /**
  * Purchase history details model.
@@ -12,9 +14,12 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
 	private static final Logger log = Logger
 			.getLogger(PurchaseInfoTableModel.class);
+	
+	private SalesSystemModel model;
 
-	public PurchaseInfoTableModel() {
+	public PurchaseInfoTableModel(SalesSystemModel model) {
 		super(new String[] { "Id", "Name", "Price", "Quantity", "Sum" });
+		this.model=model;
 	}
 
 	@Override
@@ -58,28 +63,49 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	/**
 	 * Add new SoldItem to table.
 	 */
-	public void addItem(final SoldItem item) {
+	public void addItem(final SoldItem item) throws SaleSystemException {
 		/**
 		 * XXX In case such stockItem already exists increase the quantity of
 		 * the existing stock.
 		 */
 		SoldItem onListItem = getItemByStockId(item.getStockItem().getId());
-		if (onListItem != null)
-			onListItem.setQuantity(item.getQuantity());
 
-		else
+		if (onListItem != null) {
+			int totalQuantity = onListItem.getQuantity() + item.getQuantity();
+			validateQuantityInStock(item.getStockItem(), totalQuantity);
+			onListItem.setQuantity(totalQuantity);
+			
+			log.debug("Found existing item " + onListItem.getName()
+                    + " increased quantity by " + item.getQuantity());
+			
+		} else {
+			validateQuantityInStock(item.getStockItem(), item.getQuantity());
 			rows.add(item);
-		log.debug("Added " + item.getName() + " quantity of "
-				+ item.getQuantity());
+			log.debug("Added " + item.getName() + " quantity of "
+					+ item.getQuantity());
+
+		}
 		fireTableDataChanged();
+
 	}
-	public double getOrderTotal(){
+
+	private void validateQuantityInStock(StockItem item, int quantity)
+			throws SaleSystemException {
+
+		if (!model.getWarehouseTableModel().hasEnoughInStock(item, quantity)) {
+			log.info(" -- not enough in stock!");
+			throw new SaleSystemException();
+		}
+
+	}
+
+	public double getSum() {
 		double sum = 0;
 		for (SoldItem el : rows)
 			sum += el.getSum();
 		return sum;
 	}
-	
+
 	public SoldItem getItemByStockId(final long id) {
 		for (final SoldItem item : rows) {
 			if (item.getStockItem().getId() == id)

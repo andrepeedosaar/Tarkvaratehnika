@@ -134,11 +134,11 @@ public class StockItem implements Cloneable, DisplayableItem {
 			throw new RuntimeException("invalid column!");
 		}
 	}
-
+	
+	@Override
 	public Object clone() {
-		StockItem item = new StockItem(getId(), getName(), getDescription(),
+		StockItem item = new StockItem(getId(), new String(getName()),new String (getDescription()),
 				getPrice(), getQuantity());
 		return item;
 	}
-
 }

@@ -14,6 +14,7 @@ import javax.swing.table.JTableHeader;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.exception.SaleSystemException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
@@ -99,6 +100,8 @@ public class HistoryTab {
 		if(!orderScrollPane.isVisible())
 			orderScrollPane.setVisible(true);
 		for(SoldItem el : item.getSoldItems())
-			model.getHistoryPurchaseTableModel().addItem(el);
+			try{
+				model.getHistoryPurchaseTableModel().addItem(el);
+			}catch(SaleSystemException e){}
 	}
 }

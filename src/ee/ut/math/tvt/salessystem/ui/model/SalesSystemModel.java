@@ -5,6 +5,7 @@ import javax.swing.DefaultComboBoxModel;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.controller.impl.SalesDomainControllerImpl;
 
 /**
  * Main model. Holds all the other models.
@@ -41,8 +42,8 @@ public class SalesSystemModel {
 		this.domainController = domainController;
 
 		warehouseTableModel = new StockTableModel();
-		currentPurchaseTableModel = new PurchaseInfoTableModel();
-		historyPurchaseTableModel = new PurchaseInfoTableModel();
+		currentPurchaseTableModel = new PurchaseInfoTableModel(this);
+		historyPurchaseTableModel = new PurchaseInfoTableModel(this);
 		salesHistoryModel = new SalesHistoryModel();
 
 //		// populate stock model with data from the warehouse
@@ -56,6 +57,12 @@ public class SalesSystemModel {
 		// create and populate combobox model with warehouse stuff
 		salesComboModel = new DefaultComboBoxModel<String>(
 				warehouseTableModel.getAllNames());
+	}
+	
+	//No arg constructor for JUnit testing purposes
+	public SalesSystemModel() {
+		this.domainController = new SalesDomainControllerImpl();
+		warehouseTableModel = new StockTableModel();
 	}
 
 	public StockTableModel getWarehouseTableModel() {

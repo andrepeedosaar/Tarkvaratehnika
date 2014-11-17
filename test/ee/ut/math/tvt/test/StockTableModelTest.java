@@ -2,6 +2,8 @@ package ee.ut.math.tvt.test;
 
 import static org.junit.Assert.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,37 +16,47 @@ public class StockTableModelTest {
 	
 	@Before
 	public void setUp() {
-		item = new StockItem(null, "Leib", 2.0, 10);
+		item = new StockItem(1L, "Leib", 2.0, 10);
 	  }
 	
 	@Test
 	public void testValidateNameUniqueness(){
+		//Add item with name "Leib" to model, check if we
+		//add another item with name "Leib" we get false
+		//for uniqueness
 		StockTableModel stm = new StockTableModel();
 		stm.addItem(item);
-		assertEquals("name", stm.getValueAt(0, 2));
+		assertFalse(stm.validateNameUniqueness("Leib"));
 	};
 	
 	@Test
 	public void testHasEnoughInStock(){
+		//Add item with quantity 10 to stock
+		//Check if we have 5 units of that 
+		//item in stock
 		StockTableModel stm = new StockTableModel();
 		stm.addItem(item);
-		assertEquals(10, stm.getValueAt(0, 3));
+		assertTrue(stm.hasEnoughInStock(item, 5));
 	};
 	
 	@Test
 	public void testGetItemByIdWhenItemExists(){
+		//Add item to model. Then search for that
+		//item by given method. Check if method
+		//returned right item.
 		StockTableModel stm = new StockTableModel();
-		assertTrue(stm.addItem(item));
-		
+		stm.addItem(item);
+		assertEquals(item, stm.getItemById(item.getId()));
 	};
 	
 	@Test
 	public void testGetItemByIdWhenThrowsException(){
+		//Empty model, get item with ID 1L, check
+		//if that returns exception
 		StockTableModel stm = new StockTableModel();
-		stm.addItem(item);
 		try{
-			assertEquals(0, stm.getTableRows());
-		}catch(IllegalArgumentException e){
+			assertEquals(0, stm.getItemById(1L));
+		}catch(NoSuchElementException e){
 			return;
 		}
 		fail();

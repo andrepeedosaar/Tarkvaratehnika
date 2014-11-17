@@ -14,14 +14,13 @@ public class SoldItemTest {
 	
 	@Before
 	public void setUp() {
-		item = new StockItem(null, "Leib", 2.0, 10);
+		item = new StockItem(1L, "Leib", 2.0, 10);
 	  }
 	
 	@Test
 	public void testGetSum(){
-		SoldItem s = new SoldItem(item, 1);
-		
-		assertEquals(s.getSum(), 2.0, 0.0001);
+		SoldItem s = new SoldItem(item, 2);
+		assertEquals(s.getSum(), 4.0, 0.0001);
 	};
 	
 	@Test

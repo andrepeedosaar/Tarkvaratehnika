@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.ui.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -59,7 +60,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 			if (item.getId() == id)
 				return item;
 		}
-		return null;
+		throw new NoSuchElementException();
 	}
 
 	public T getItemByName(final String name) {

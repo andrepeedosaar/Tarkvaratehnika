@@ -13,17 +13,20 @@ public class StockItemTest {
 
 	@Before
 	public void setUp() {
-		item = new StockItem(null, "Leib", 2.0, 10);
+		item = new StockItem(1L, "Leib", "Viljatoode",2.0, 10);
 	  }
 	
 	@Test
 	public void testClone(){
-		assertEquals(item, item.clone());
+		//How to test it?
+		assertNotSame(item, item.clone());
+//		assertEquals(item.toString(), item.clone().toString());
 	};
 	
 	@Test
 	public void testGetColumn(){
-		assertEquals(item, item.getColumn(0));
+		//Get column 2 (which is price)
+		assertEquals(2.0, item.getColumn(2));
 	};
 	
 }

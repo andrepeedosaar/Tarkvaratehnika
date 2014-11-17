@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.NoSuchElementException;
+
 import org.apache.log4j.Logger;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
@@ -37,20 +39,24 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * @param stockItem
 	 */
 	public boolean addItem(final StockItem stockItem) {
-		StockItem item = getItemById(stockItem.getId());
 
-		if (item != null) {
+		
+		try{
+			getItemById(stockItem.getId());
+			
 			log.debug("Found existing item " + stockItem.getName()
 					+ " increased quantity by " + stockItem.getQuantity());
+			
 			fireTableDataChanged();
 			return true;
-		} else {
+		}catch (NoSuchElementException e){
 			rows.add(stockItem);
 			log.debug("Added " + stockItem.getName() + " quantity of "
 					+ stockItem.getQuantity());
 			fireTableDataChanged();
 			return false;
 		}
+
 	}
 
 	@Override
@@ -70,5 +76,25 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 		}
 
 		return buffer.toString();
+	}
+	
+	public boolean hasEnoughInStock(StockItem item, int quantity) {
+	    for(StockItem i : this.rows) {
+	        if (i.getId().equals(item.getId())) {
+	            return (i.getQuantity() >= quantity);
+	        }
+	    }
+	    return false;
+	}
+	
+	public boolean validateNameUniqueness(String newName) {
+	    for (StockItem item : rows) {
+	        log.debug(" === Comparing: " + newName + " vs. " + item.getName());
+	        
+	        if (newName.equals(item.getName())) {
+	            return false;
+	        }
+	    }
+	    return true;
 	}
 }

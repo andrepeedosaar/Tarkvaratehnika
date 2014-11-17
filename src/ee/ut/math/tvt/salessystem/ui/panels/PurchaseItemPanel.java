@@ -2,6 +2,7 @@ package ee.ut.math.tvt.salessystem.ui.panels;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.SaleSystemException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,12 +23,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import org.apache.log4j.Logger;
+
 /**
  * Purchase pane + shopping cart tabel UI.
  */
 public class PurchaseItemPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static final Logger logger = Logger.getLogger(SalesSystemModel.class);
 
 	// Text field on the dialogPane
 	private JComboBox<String> barCodeCombo;
@@ -178,29 +183,25 @@ public class PurchaseItemPanel extends JPanel {
 			} catch (NumberFormatException ex) {
 				quantity = 1;
 			}
-			//If item is already in the purchase list, take that
-			//quantity into account as well
-			SoldItem onListItem = model.getCurrentPurchaseTableModel()
-					.getItemByStockId(stockItem.getId());
-			if(onListItem!=null)
-				quantity+=onListItem.getQuantity();
-			
-			//Make sure we have enough supplies in warehouse
-			if (stockItem.getQuantity() >= quantity) {
+			try{
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
-			} else
-
-				JOptionPane
-						.showMessageDialog(
-								new JPanel(),
-								stockItem.getName()
-										+ " can't be purchased. Warehouse is out of stock. Only "
-										+ stockItem.getQuantity()
-										+ " units left.",
-								"Error: out of stock",
-								JOptionPane.ERROR_MESSAGE);
+			}catch(SaleSystemException e){
+				showNotEnoughInStockWarning();
+			}
 		}
+			
+	}
+
+	private void showNotEnoughInStockWarning() {
+		JOptionPane
+		.showMessageDialog(
+				new JPanel(),
+				"Not enough stock, decrease amount",
+				"Error!",
+				JOptionPane.ERROR_MESSAGE);
+		
+		logger.debug("There was not enough cargo in warehouse to add item");
 	}
 
 	/**
