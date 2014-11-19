@@ -84,8 +84,6 @@
 				<fileset dir="${build.test.dir}" includes="**/*.class" />
 			</batchtest>
 		</junit>
-
-
 	</target>
 
 	<!-- Manage database -->
@@ -214,7 +212,7 @@
 
 	<!-- Run salessystem in console -->
 	<target name="runc" depends="build" description="Run the application (console)">
-		<java classname="ee.ut.math.tvt.[team].Intro" classpathref="run.classpath"
+		<java classname="ee.ut.math.tvt.RAM.Intro" classpathref="run.classpath"
 			fork="yes">
 			<arg value="console" />
 		</java>
