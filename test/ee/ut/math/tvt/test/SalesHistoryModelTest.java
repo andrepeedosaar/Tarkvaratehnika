@@ -22,7 +22,7 @@ public class SalesHistoryModelTest {
 	
 	SalesHistoryModel shm;
 	
-	List<SoldItem> soldItems = new ArrayList();
+	List<SoldItem> soldItems = new ArrayList<SoldItem>();
 	
 	SoldHistoryItem shi;
 	
@@ -40,7 +40,7 @@ public class SalesHistoryModelTest {
 		shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
 		SalesHistoryModel shm = new SalesHistoryModel();
 		shm.addItem(shi);
-		assertEquals(shm.getRow(0), 2);
+		assertEquals(shm.getRow(0), "");
 	}
 	
 	@Test
@@ -49,7 +49,7 @@ public class SalesHistoryModelTest {
 		shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
 		SalesHistoryModel shm = new SalesHistoryModel();
 		shm.addItem(shi);
-		assertEquals(shm.getRow(0), 2);
+		assertEquals(shm.getRow(0), "Leib");
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class SalesHistoryModelTest {
 		shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
 		SalesHistoryModel shm = new SalesHistoryModel();
 		shm.addItem(shi);
-		assertEquals(shm.getRow(0), 2);
+		assertEquals(shm.getRow(0), "Leib");
 	}
 	
 	private String getCurrentDate() {
