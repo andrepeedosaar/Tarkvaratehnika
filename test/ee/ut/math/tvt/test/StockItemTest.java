@@ -19,6 +19,12 @@ public class StockItemTest {
 	@Test
 	public void testClone(){
 		//How to test it?
+		
+		// Object item2 = item.clone();
+		// ei tööta assertEquals(item2, item);
+		
+		
+		
 		assertNotSame(item, item.clone());
 //		assertEquals(item.toString(), item.clone().toString());
 	};
