@@ -3,6 +3,7 @@ package ee.ut.math.tvt.test;
 import static org.junit.Assert.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,14 +14,14 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldHistoryItem;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
-public class SoldHistoryItemTest {
+public class SoldHistoryitemTest {
 	
 	StockItem item, item2;
 	SoldItem si1, si2;
 	
 	SoldHistoryItem shi;
 	
-	List<SoldItem> soldItems;
+	List<SoldItem> soldItems = new ArrayList();
 	
 	@Before
 	public void setUp() {
@@ -41,7 +42,7 @@ public class SoldHistoryItemTest {
 	public void testcalcTotalWithOneSoldItems(){
 		soldItems.add(si1);
 		SoldHistoryItem shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
-		assertEquals(shi.calcTotal(), 20.0, 0.0001);
+		assertEquals(shi.calcTotal(), 2.0, 0.0001);
 	}
 
 	@Test
@@ -49,7 +50,7 @@ public class SoldHistoryItemTest {
 		soldItems.add(si1);
 		soldItems.add(si2);
 		SoldHistoryItem shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
-		assertEquals(shi.calcTotal(), 50.0, 0.0001);
+		assertEquals(shi.calcTotal(), 8.0, 0.0001);
 	}
 	
 	private String getCurrentDate() {

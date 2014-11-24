@@ -3,6 +3,7 @@ package ee.ut.math.tvt.test;
 import static org.junit.Assert.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class SalesHistoryModelTest {
 	
 	SalesHistoryModel shm;
 	
-	List<SoldItem> soldItems;
+	List<SoldItem> soldItems = new ArrayList();
 	
 	SoldHistoryItem shi;
 	
