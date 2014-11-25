@@ -2,9 +2,7 @@ package ee.ut.math.tvt.test;
 
 import static org.junit.Assert.*;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -21,7 +19,7 @@ public class SoldHistoryitemTest {
 	
 	SoldHistoryItem shi;
 	
-	List<SoldItem> soldItems = new ArrayList();
+	List<SoldItem> soldItems = new ArrayList<SoldItem>();
 	
 	@Before
 	public void setUp() {
@@ -34,14 +32,14 @@ public class SoldHistoryitemTest {
 	
 	@Test
 	public void testcalcTotalWithZeroSoldItems(){
-		SoldHistoryItem shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
+		SoldHistoryItem shi = new SoldHistoryItem("", "", soldItems);
 		assertEquals(shi.calcTotal(), 0, 0.0001);
 	}
 	
 	@Test
 	public void testcalcTotalWithOneSoldItems(){
 		soldItems.add(si1);
-		SoldHistoryItem shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
+		SoldHistoryItem shi = new SoldHistoryItem("", "", soldItems);
 		assertEquals(shi.calcTotal(), 2.0, 0.0001);
 	}
 
@@ -49,20 +47,8 @@ public class SoldHistoryitemTest {
 	public void testcalcTotalWithMoreThanOneSoldItem(){
 		soldItems.add(si1);
 		soldItems.add(si2);
-		SoldHistoryItem shi = new SoldHistoryItem(getCurrentDate(), getCurrentTime(), soldItems);
+		SoldHistoryItem shi = new SoldHistoryItem("", "", soldItems);
 		assertEquals(shi.calcTotal(), 8.0, 0.0001);
-	}
-	
-	private String getCurrentDate() {
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		return sdf.format(date).toString();
-	}
-
-	private String getCurrentTime() {
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-		return sdf.format(date).toString();
 	}
 	
 }

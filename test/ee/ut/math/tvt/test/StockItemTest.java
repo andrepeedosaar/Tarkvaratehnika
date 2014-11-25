@@ -8,31 +8,29 @@ import org.junit.Test;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 public class StockItemTest {
-	
+
 	StockItem item;
 
 	@Before
 	public void setUp() {
-		item = new StockItem(1L, "Leib", "Viljatoode",2.0, 10);
-	  }
-	
+		item = new StockItem(1L, "Leib", "Viljatoode", 2.0, 10);
+	}
+
 	@Test
-	public void testClone(){
-		//How to test it?
+	public void testClone() {
+
+		StockItem item2 = (StockItem) item.clone();
 		
-		// Object item2 = item.clone();
-		// ei tööta assertEquals(item2, item);
-		
-		
-		
-		assertNotSame(item, item.clone());
-//		assertEquals(item.toString(), item.clone().toString());
+		//Item 2 is an independant object not a reference
+		assertFalse(item == item2);
+		//Yet the content is the same
+		assertEquals(item.toString(), item2.toString());
 	};
-	
+
 	@Test
-	public void testGetColumn(){
-		//Get column 2 (which is price)
+	public void testGetColumn() {
+		// Get column 2 (which is price)
 		assertEquals(2.0, item.getColumn(2));
 	};
-	
+
 }
