@@ -1,4 +1,9 @@
-bin/
-build/
-data/*
-!data/*.script
+task1/bin/
+task1/build/
+task1/data/*
+!task1/data/*.script
+
+task2/bin/
+task2/build/
+task2/data/*
+!task2/data/*.script
