@@ -20,35 +20,27 @@ public class SalesHistoryModelTest {
 	
 	SoldHistoryItem shi;
 	
-	@Test
-	public void testAddHistoryItem() {
-		SalesHistoryModel shm = new SalesHistoryModel();
-		shi = new SoldHistoryItem("Date1", "Time1", soldItems);
-		try{
-			shm.addItem(shi);
-		}catch(Exception e){
-			fail();
-		}
-	}
 	
 	@Test
-	public void testGetRowWithZeroHistoryItems() {
+	public void testGetValueAt() {
 		SalesHistoryModel shm = new SalesHistoryModel();
+		shi = new SoldHistoryItem("22/11/2014", "Time1", soldItems);
+		shm.addItem(shi);
+		
+		assertEquals(shm.getValueAt(0, 0), "22/11/2014");
+	}	
+	
+	@Test
+	public void testGetValueAtWithNoHistoryItems() {
+		SalesHistoryModel shm = new SalesHistoryModel();
+
 		try{
-			assertEquals(shm.getRow(0), "");
-		}catch(IndexOutOfBoundsException e){
+			assertEquals(shm.getValueAt(0, 0), "22/11/2014");
+		}
+		catch(Exception e){
 			return;
 		}
 		fail();
-	}
-	
-	@Test
-	public void tesGetRowWithOneHistoryItem() {
-		shi = new SoldHistoryItem("Date1", "Time1", soldItems);
-		SalesHistoryModel shm = new SalesHistoryModel();
-		shm.addItem(shi);
-		assertEquals(shm.getRow(0), shi);
-	}
-		
+	}		
 }
 
